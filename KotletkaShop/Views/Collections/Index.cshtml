@@ -1,0 +1,27 @@
+﻿@model IEnumerable<KotletkaShop.Models.Collection>
+@{
+    ViewData["Title"] = "Коллекции";
+}
+
+<h2>Коллекции</h2>
+
+<p>
+    <a asp-action="Create">Создать новую</a>
+</p>
+
+<div class="table">
+    @foreach (Collection collection in Model)
+    {
+        <a class="row" asp-action="Details" asp-route-id="@collection.CollectionID">
+            <div class="cell">
+                @Html.DisplayFor(modelItem => collection.Title)
+            </div>
+            <div class="cell">
+                @foreach (string condition in collection.ScreenConditions)
+                {
+                <p>@condition</p>
+                }
+            </div>
+        </a>
+    }
+</div>

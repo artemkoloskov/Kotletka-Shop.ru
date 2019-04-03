@@ -1,0 +1,50 @@
+﻿.table {
+    display: table;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+.table-header {
+    display: table-header-group;
+}
+
+.row {
+    display: table-row;
+    border-bottom: 0.01em solid gray;
+    margin-bottom: 10px;
+}
+
+.cell {
+    display: table-cell;
+    padding: 10px;
+}
+
+.row:hover {
+    background-color: #cccccc;
+}
+
+.order-header h4 {
+    display: inline;
+}
+
+.order-products-table {
+    display: table;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+.order-products-row {
+    display: table-row;
+}
+
+.order-products-row-total {
+    display: table-row;
+    border-bottom: 0.01em solid gray;
+    margin-bottom: 10px;
+}
+
+
+.order-products-cell {
+    display: table-cell;
+    padding: 10px;
+}

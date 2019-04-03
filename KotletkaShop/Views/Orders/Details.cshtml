@@ -1,0 +1,101 @@
+﻿@model KotletkaShop.Models.Order
+
+@{
+    ViewData["Title"] = "Заказ #" + Model.OrderID;
+}
+
+<div>
+    <a asp-action="Index">&lt;Назад</a>
+</div>
+
+<div class="order-header">
+    <h4>#@Html.DisplayFor(model => model.OrderID)</h4><span>@Model.DateCreated.ToLongDateString() в @Model.DateCreated.ToShortTimeString()</span>
+</div>
+
+<div class="order-products-panel">
+    @foreach (OrderProduct item in Model.OrderProducts)
+    {
+    <div class="ordep-product">
+        @Html.DisplayFor(model => item.Product.Title)
+        @Html.DisplayFor(model => item.Product.Option1Name) @Html.DisplayFor(model => item.Product.Option1Value)
+        @Html.DisplayFor(model => item.Product.Option2Name) @Html.DisplayFor(model => item.Product.Option2Value)
+        @Html.DisplayFor(model => item.Product.Option3Name) @Html.DisplayFor(model => item.Product.Option3Value)
+        @Html.DisplayFor(model => item.Product.Price) руб. x @Html.DisplayFor(model => item.Quantity)
+        @(item.Quantity * item.Product.Price)
+    </div>
+    }
+</div>
+
+<div class="order-payment-info-panel">
+    <h4>@Html.DisplayFor(model => Model.Paid)</h4>
+    <div class="order-products-table">
+        @foreach (OrderDiscount d in Model.OrderDiscounts)
+        {
+            <div class="order-products-row">
+                <div class="order-products-cell">Скидка</div>
+                <div class="order-products-cell">@Html.DisplayFor(model => d.Discount.Handle)</div>
+                <div class="order-products-cell">-@Html.DisplayFor(model => Model.DiscountAmount)</div>
+            </div>
+        }
+        <div class="order-products-row">
+            <div class="order-products-cell">Итог с учетом скидки</div>
+            <div class="order-products-cell"></div> @*TODO*@
+            <div class="order-products-cell">@Html.DisplayFor(model => Model.DiscountedCost)</div>
+        </div>
+        <div class="order-products-row">
+            <div class="order-products-cell">Доставка</div>
+            <div class="order-products-cell">@Html.DisplayFor(model => Model.ShippingID)</div> @*TODO*@
+            <div class="order-products-cell">@Html.DisplayFor(model => Model.ShippingCost)</div>
+        </div>
+        <div class="order-products-row-total">
+            <div class="order-products-cell"><h4>Общий итог</h4> </div>
+            <div class="order-products-cell"></div> @*TODO*@
+            <div class="order-products-cell"><h4>@Html.DisplayFor(model => Model.TotalCost)</h4></div>
+        </div>
+        <div class="order-products-row">
+            <div class="order-products-cell">Оплачено</div>
+            <div class="order-products-cell"></div> @*TODO*@
+            <div class="order-products-cell">@Model.TotalPaid</div>
+        </div>
+    </div>
+</div>
+
+<div class="order-notes-panel">
+    <h4>Заметки</h4>
+    <div class="order-note">
+        @Html.DisplayFor(model => Model.Note)
+    </div>
+</div>
+
+<div class="client-details-panel">
+    <div class="client-panel">
+        <a asp-controller="Customers" asp-action="Details" asp-route-id="@Model.CustomerID">
+        <h2>
+            @Html.DisplayFor(model => Model.Customer.ScreenName)
+        </h2>
+        </a>
+        <p>@Model.Customer.Orders.Count() заказов</p>
+    </div>
+
+    <div class="contact-info-panel">
+        <h6>КОНТАКТНАЯ  ИНФОРМАЦИЯ</h6>
+        <p>@Html.DisplayFor(model => Model.Customer.Email)</p>
+        <p>@Html.DisplayFor(model => Model.Customer.PhoneNumber)</p>
+    </div>
+
+    <div class="address-info-panel">
+        <h6>АДРЕС ДОСТАВКИ</h6>
+        <p>@Html.DisplayFor(model => Model.Customer.ScreenName)</p>
+        <p>@Html.DisplayFor(model => Model.Customer.ZipCode)</p>
+        <p>@Html.DisplayFor(model => Model.Customer.Country)</p>
+        <p>@Html.DisplayFor(model => Model.Customer.Province)</p>
+        <p>@Html.DisplayFor(model => Model.Customer.District)</p>
+        <p>@Html.DisplayFor(model => Model.Customer.City)</p>
+        <p>ул. @Html.DisplayFor(model => Model.Customer.Street), д. @Html.DisplayFor(model => Model.Customer.Building), кв. @Html.DisplayFor(model => Model.Customer.Apartment)</p>
+
+    </div>
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.OrderID">Редактировать</a>
+</div>

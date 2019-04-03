@@ -1,0 +1,62 @@
+﻿@model KotletkaShop.Models.Customer
+
+@{
+    ViewData["Title"] = Model.ScreenName;
+}
+
+<h4>@Model.ScreenName</h4>
+
+<div class="customer-info-header">
+    <section class="customer-info-header">
+        <b>@Html.DisplayFor(model => model.ScreenName)</b>
+        <p>@Html.DisplayFor(model => model.ScreenAddressShort)</p>
+        <p>@Html.DisplayFor(model => model.Email)</p>
+    </section>
+
+    <section class="customer-info-section">
+        <p>@Html.DisplayFor(model => model.Note)</p>
+    </section>
+
+    <section class="customer-info-section">
+        <p>Всего покупок на</p>
+        <p>@Html.DisplayFor(model => model.TotalSpent) р.</p>
+    </section>
+</div>
+
+<div class="client-details-panel">
+    <div class="client-panel">
+        <a asp-controller="Customers" asp-action="Details" asp-route-id="@Model.CustomerID">
+            <h2>
+                @Html.DisplayFor(model => Model.ScreenName)
+            </h2>
+        </a>
+        <p>@Model.Orders.Count() заказов</p>
+    </div>
+
+    <div class="contact-info-panel">
+        <h6>КОНТАКТНАЯ  ИНФОРМАЦИЯ</h6>
+        <p>@Html.DisplayFor(model => Model.Email)</p>
+        <p>@Html.DisplayFor(model => Model.PhoneNumber)</p>
+    </div>
+
+    <div class="address-info-panel">
+        <h6>АДРЕС ДОСТАВКИ</h6>
+        <p>@Html.DisplayFor(model => Model.ScreenName)</p>
+        <p>@Html.DisplayFor(model => Model.ZipCode)</p>
+        <p>@Html.DisplayFor(model => Model.Country)</p>
+        <p>@Html.DisplayFor(model => Model.Province)</p>
+        <p>@Html.DisplayFor(model => Model.District)</p>
+        <p>@Html.DisplayFor(model => Model.City)</p>
+        <p>ул. @Html.DisplayFor(model => Model.Street), д. @Html.DisplayFor(model => Model.Building), кв. @Html.DisplayFor(model => Model.Apartment)</p>
+
+    </div>
+</div>
+
+<div class="tags-panel">
+    <h6>ТЭГИ</h6>
+    <p>@Html.DisplayFor(model => model.Tags)</p>
+</div>
+
+<div>
+    <a asp-action="Index">Назад к списку</a>
+</div>

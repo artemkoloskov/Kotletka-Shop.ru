@@ -1,0 +1,36 @@
+﻿@model IEnumerable<KotletkaShop.Models.Order>
+@{
+    ViewData["Title"] = "Список заказов";
+}
+
+<h2>Заказы</h2>
+
+<p>
+    <a asp-action="Create">Создать новый заказ</a>
+</p>
+
+<div class="table">
+    @foreach (Order order in Model)
+    {
+        <a class="row" asp-action="Details" asp-route-id="@order.OrderID">
+            <div class="cell">
+                @Html.DisplayFor(modelItem => order.OrderID)
+            </div>
+            <div class="cell">
+                @Html.DisplayFor(modelItem => order.DateCreated)
+            </div>
+            <div class="cell">
+                @Html.DisplayFor(modelItem => order.Customer.ScreenName)
+            </div>
+            <div class="cell">
+                @Html.DisplayFor(modelItem => order.Paid)
+            </div>
+            <div class="cell">
+                @Html.DisplayFor(modelItem => order.Fulfilled)
+            </div>
+            <div class="cell">
+                @Html.DisplayFor(modelItem => order.TotalCost)
+            </div>
+        </a>
+    }
+</div>
