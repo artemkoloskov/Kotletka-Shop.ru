@@ -6,7 +6,27 @@
 
 <h4>@Html.DisplayFor(model => model.Title)</h4>
 
-@foreach (Product product in Model.Products)
-{
-    <p>@product.Title</p>
-}
+<div class="collection-details-panel">
+    <p>@Html.DisplayFor(model => model.Title)</p>
+    <p>@Html.DisplayFor(model => model.Handle)</p>
+    <p>@Html.DisplayFor(model => model.Body)</p>
+</div>
+
+<div class="collection-conditions-panel">
+    @foreach (string condition in Model.ScreenConditions)
+    {
+        <p>@condition</p>
+    }
+</div>
+
+<div class="collection-products-panel">
+    <p>Товары в коллеции должны отвечать всем условиям: @Html.DisplayFor(model => model.MatchAllConditions)</p> @*LOCALIZE*@
+    @foreach (Product product in Model.Products)
+    {
+        <p>@product.Title</p>
+    }
+</div>
+
+<div>
+    <a asp-action="Index">Назад к списку</a>
+</div>

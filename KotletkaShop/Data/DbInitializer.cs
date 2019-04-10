@@ -2,7 +2,7 @@
 using System.Linq;
 using KotletkaShop.Models;
 using static KotletkaShop.Models.DiscountTypes;
-using static KotletkaShop.Models.DiscountApplyableObjectTypes;
+using static KotletkaShop.Models.DiscountApplicableObjectTypes;
 using static KotletkaShop.Models.DiscountEligibleObjectTypes;
 using static KotletkaShop.Models.DiscountMinimumRequirementTypes;
 using static KotletkaShop.Models.CollectionCompareSubjects;
@@ -70,9 +70,9 @@ namespace KotletkaShop.Data
 
             // Инициализация тестовых скидок
             Discount[] discounts = {
-                new Discount{Handle="50_PERCENT_ALLPRODS_EVERYONE_MORETHAN1001",Type=Percentage,Value=0.50,AppliesTo=EntireOrder,MinimumRequirement=MinimumAmount,MinimumRequirementValue=1001,CustomerEligibility=Everyone},
-                new Discount{Handle="50_RUBLE_1-3PRODS_2",Type=FixedAmount,Value=50,AppliesTo=SpecificProducts,ApplyableObjects="1, 3",MinimumRequirement=MinimumQuantity,MinimumRequirementValue=3,CustomerEligibility=SpecificCustomers,EligibleObjects="2"},
-                new Discount{Handle="FREESHIPPING__ALLPRODS_EVERYONE",Type=FreeShiping,AppliesTo=EntireOrder,MinimumRequirement=None,CustomerEligibility=Everyone}
+                new Discount{Handle="50_PERCENT_ALLPRODS_EVERYONE_MORETHAN1001",Type=Percentage,Value=0.50,AppliesTo=EntireOrder,MinimumRequirement=MinimumAmount,MinimumRequirementValue=1001,CustomerEligibility=Everyone,IsActive=true,TimesUsed=1,StartDate=DateTime.ParseExact("2019-02-01 00:00:00", "yyyy-MM-dd HH:mm:ss",System.Globalization.CultureInfo.InvariantCulture),EndDate=DateTime.ParseExact("2019-05-01 00:00:00", "yyyy-MM-dd HH:mm:ss",System.Globalization.CultureInfo.InvariantCulture)},
+                new Discount{Handle="50_RUBLE_1-3PRODS_2",Type=FixedAmount,Value=50,AppliesTo=SpecificProducts,ApplicableObjects="1, 3",MinimumRequirement=MinimumQuantity,MinimumRequirementValue=3,CustomerEligibility=SpecificCustomers,EligibleObjects="2",IsActive=true,TimesUsed=0,StartDate=DateTime.ParseExact("2019-04-01 00:00:00", "yyyy-MM-dd HH:mm:ss",System.Globalization.CultureInfo.InvariantCulture),EndDate=DateTime.ParseExact("2100-01-01 00:00:00", "yyyy-MM-dd HH:mm:ss",System.Globalization.CultureInfo.InvariantCulture)},
+                new Discount{Handle="FREESHIPPING__ALLPRODS_EVERYONE",Type=FreeShiping,AppliesTo=EntireOrder,MinimumRequirement=None,CustomerEligibility=Everyone,IsActive=true,TimesUsed=3,StartDate=DateTime.ParseExact("2019-02-01 00:00:00", "yyyy-MM-dd HH:mm:ss",System.Globalization.CultureInfo.InvariantCulture),EndDate=DateTime.ParseExact("2019-05-01 00:00:00", "yyyy-MM-dd HH:mm:ss",System.Globalization.CultureInfo.InvariantCulture)}
             };
             foreach (Discount d in discounts)
             {

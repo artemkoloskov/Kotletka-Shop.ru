@@ -1,0 +1,28 @@
+﻿@model IEnumerable<KotletkaShop.Models.Discount>
+@{
+    ViewData["Title"] = "Скидки"; @*LOCALIZE*@
+}
+
+<h2>Коллекции</h2>@*LOCALIZE*@
+
+<p>
+    <a asp-action="Create">Создать новую</a>@*LOCALIZE*@
+</p>
+
+<div class="table">
+    @foreach (Discount discount in Model)
+    {
+        <a class="row" asp-action="Details" asp-route-id="@discount.DiscountID">
+            <div class="cell">
+                <p>@Html.DisplayFor(modelItem => discount.Handle)</p>
+                <p>@discount.ToString()</p>
+            </div>
+            <div class="cell">
+                <p>@Html.DisplayFor(modelItem => discount.IsActive)</p>
+            </div>
+            <div class="cell">
+                <p>От @discount.StartDate.ToLongDateString()</p>@*LOCALIZE*@
+            </div>
+        </a>
+    }
+</div>

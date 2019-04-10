@@ -23,6 +23,7 @@
     <Folder Include="Views\Collections\" />
     <Folder Include="Views\Orders\" />
     <Folder Include="Views\Customers\" />
+    <Folder Include="Views\Discounts\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Controllers\Home1Controller.cs" />

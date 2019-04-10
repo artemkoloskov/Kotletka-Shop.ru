@@ -1,12 +1,12 @@
 ﻿@model IEnumerable<KotletkaShop.Models.Collection>
 @{
-    ViewData["Title"] = "Коллекции";
+    ViewData["Title"] = "Коллекции"; @*LOCALIZE*@
 }
 
-<h2>Коллекции</h2>
+<h2>Коллекции</h2> @*LOCALIZE*@
 
 <p>
-    <a asp-action="Create">Создать новую</a>
+    <a asp-action="Create">Создать новую</a> @*LOCALIZE*@
 </p>
 
 <div class="table">
@@ -19,7 +19,7 @@
             <div class="cell">
                 @foreach (string condition in collection.ScreenConditions)
                 {
-                <p>@condition</p>
+                    <p>@condition</p>
                 }
             </div>
         </a>

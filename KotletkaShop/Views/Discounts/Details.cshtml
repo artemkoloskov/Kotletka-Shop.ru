@@ -1,0 +1,77 @@
+﻿@model KotletkaShop.Models.Discount
+
+@{
+    ViewData["Title"] = Model.Handle;
+}
+
+<h4>@Model.Handle</h4>
+
+<div class="discount-options-panel">
+    <div class="order-products-table">
+        <div class="order-products-row">
+            <div class="order-products-cell">
+                <p>Тип скидки</p> @*Localize*@
+            </div>
+            <div class="order-products-cell">
+                <p>Скидка</p> @*Localize*@
+            </div>
+        </div>
+
+        <div class="order-products-row">
+            <div class="order-products-cell">
+                <p>@Model.TypeToString()</p>
+            </div>
+            <div class="order-products-cell">
+                <p>@Model.ScreenValue()</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="discount-aplies-to-panel">
+    <p>Применимо к @Model.AppliesToToString()</p> @*Localize*@
+    @if (Model.AppliesTo == DiscountApplicableObjectTypes.SpecificCollections)
+    {
+        <p>Коллекции</p> @*Localize*@
+        <div class="order-products-table">
+            @foreach (Collection c in Model.ApplicableCollections)
+            {
+                <div class="order-products-row">
+                    <div class="order-products-cell">
+                        @c.Title
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else if (Model.AppliesTo == DiscountApplicableObjectTypes.SpecificProducts)
+    {
+        <p>Товары</p> @*Localize*@
+        <div class="order-products-table">
+            @foreach (Product p in Model.ApplicableProducts)
+            {
+                <div class="order-products-row">
+                    <div class="order-products-cell">
+                        @p.Title
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+<div class="discount-minimum-requirement-panel">
+    <p>@Model.MinimumRequirementToString()</p>
+
+    @if (Model.MinimumRequirement == DiscountMinimumRequirementTypes.MinimumAmount)
+    {
+        <p>Сумма заказа должна быть более</p> @*Localize*@
+        <p>@Html.DisplayFor(model => model.MinimumRequirementValue) руб.</p> @*Localize*@
+    }
+    else if (Model.MinimumRequirement == DiscountMinimumRequirementTypes.MinimumQuantity)
+    {
+        <p>Количестов товаров в заказе должна быть более</p> @*Localize*@
+        <p>@Html.DisplayFor(model => model.MinimumRequirementValue) шт.</p> @*Localize*@
+    }
+</div>
+

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using KotletkaShop.Data;
+using KotletkaShop.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -34,17 +35,12 @@ namespace KotletkaShop.Controllers
                 return NotFound();
             }
 
-            var customer = await _context.Customers
+            Customer customer = await _context.Customers
                 .Include(c => c.Orders).Include(c => c.Payments)
                 .AsNoTracking()
                 .SingleOrDefaultAsync(c => c.CustomerID == id);
 
-            if (customer == null)
-            {
-                return NotFound();
-            }
-
-            return View(customer);
+            return customer == null ? NotFound() : (IActionResult)View(customer);
         }
     }
 }

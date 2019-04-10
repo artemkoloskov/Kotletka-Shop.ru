@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using static KotletkaShop.Models.DiscountTypes;
-using static KotletkaShop.Models.DiscountApplyableObjectTypes;
+using static KotletkaShop.Models.DiscountApplicableObjectTypes;
 using static KotletkaShop.Models.DiscountEligibleObjectTypes;
 using static KotletkaShop.Models.DiscountMinimumRequirementTypes;
 
@@ -69,64 +69,67 @@ namespace KotletkaShop.Models
 
                 foreach (OrderDiscount d in OrderDiscounts)
                 {
-                    if (d.Discount.CustomerEligibility == Everyone ||
-                        d.Discount.CustomerEligibility == SpecificCustomers && d.Discount.EligibleObjectsIDs.Contains(CustomerID)) // TODO добавить проверку на группы и сами группы покупателей
+                    if (d.Discount.IsActive)
                     {
-                        if (d.Discount.MinimumRequirement == MinimumAmount && Cost >= d.Discount.MinimumRequirementValue ||
-                            d.Discount.MinimumRequirement == MinimumQuantity && AmountOfProducts >= d.Discount.MinimumRequirementValue ||
-                            d.Discount.MinimumRequirement == None)
+                        if (d.Discount.CustomerEligibility == Everyone ||
+                            d.Discount.CustomerEligibility == SpecificCustomers && d.Discount.EligibleObjectsIDs.Contains(CustomerID)) // TODO добавить проверку на группы и сами группы покупателей
                         {
-                            if (d.Discount.AppliesTo == EntireOrder)
+                            if (d.Discount.MinimumRequirement == MinimumAmount && Cost >= d.Discount.MinimumRequirementValue ||
+                                d.Discount.MinimumRequirement == MinimumQuantity && AmountOfProducts >= d.Discount.MinimumRequirementValue ||
+                                d.Discount.MinimumRequirement == None)
                             {
-                                switch (d.Discount.Type)
+                                if (d.Discount.AppliesTo == EntireOrder)
                                 {
-                                    case FixedAmount:
-                                        discountAmount += d.Discount.Value;
-                                        break;
-                                    case FreeShiping:
-                                        if (!shippingIsAlreadyFree)
-                                        {
-                                            discountAmount += ShippingCost;
-                                            shippingIsAlreadyFree = true;
-                                        }
-                                        break;
-                                    case Percentage:
-                                        discountAmount += Cost * d.Discount.Value;
-                                        break;
-                                    case BuyXGetY:
-                                        break; // TODO добавить этот случай
-                                }
-                            }
-                            else if (d.Discount.AppliesTo == SpecificProducts)
-                            {
-                                foreach (OrderProduct p in OrderProducts)
-                                {
-                                    if (d.Discount.ApplyableObjectsIDs.Contains(p.ProductID))
+                                    switch (d.Discount.Type)
                                     {
-                                        switch (d.Discount.Type)
+                                        case FixedAmount:
+                                            discountAmount += d.Discount.Value;
+                                            break;
+                                        case FreeShiping:
+                                            if (!shippingIsAlreadyFree)
+                                            {
+                                                discountAmount += ShippingCost;
+                                                shippingIsAlreadyFree = true;
+                                            }
+                                            break;
+                                        case Percentage:
+                                            discountAmount += Cost * d.Discount.Value;
+                                            break;
+                                        case BuyXGetY:
+                                            break; // TODO добавить этот случай
+                                    }
+                                }
+                                else if (d.Discount.AppliesTo == SpecificProducts)
+                                {
+                                    foreach (OrderProduct p in OrderProducts)
+                                    {
+                                        if (d.Discount.ApplyableObjectsIDs.Contains(p.ProductID))
                                         {
-                                            case FixedAmount:
-                                                discountAmount += d.Discount.Value;
-                                                break;
-                                            case FreeShiping:
-                                                if (!shippingIsAlreadyFree)
-                                                {
-                                                    discountAmount += ShippingCost;
-                                                    shippingIsAlreadyFree = true;
-                                                }
-                                                break;
-                                            case Percentage:
-                                                discountAmount += p.Product.Price * p.Quantity * d.Discount.Value;
-                                                break;
-                                            case BuyXGetY: // TODO добавить этот случай
-                                                break;
+                                            switch (d.Discount.Type)
+                                            {
+                                                case FixedAmount:
+                                                    discountAmount += d.Discount.Value;
+                                                    break;
+                                                case FreeShiping:
+                                                    if (!shippingIsAlreadyFree)
+                                                    {
+                                                        discountAmount += ShippingCost;
+                                                        shippingIsAlreadyFree = true;
+                                                    }
+                                                    break;
+                                                case Percentage:
+                                                    discountAmount += p.Product.Price * p.Quantity * d.Discount.Value;
+                                                    break;
+                                                case BuyXGetY: // TODO добавить этот случай
+                                                    break;
+                                            }
                                         }
                                     }
                                 }
-                            }
-                            else if (d.Discount.AppliesTo == SpecificCollections) // TODO добавить этот случай
-                            {
+                                else if (d.Discount.AppliesTo == SpecificCollections) // TODO добавить этот случай
+                                {
 
+                                }
                             }
                         }
                     }
