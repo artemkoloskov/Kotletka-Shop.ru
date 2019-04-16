@@ -8,7 +8,7 @@
         <environment include="Development">
             <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
             <link rel="stylesheet" href="~/css/site.css" />
-            <link rel="stylesheet" href="~/css/orders.css" />
+            <link rel="stylesheet" href="~/css/CustomStyles.css" />
         </environment>
         <environment exclude="Development">
             <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -26,14 +26,16 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
                     </button>
-                    <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">KotletkaShop</a>
+                    <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Kotletka-Shop</a>
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                        <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                        <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                        <li><a asp-area="" asp-controller="Collections" asp-action="Index">Коллекции</a></li> @*Localize*@
+                        <li><a asp-area="" asp-controller="Customers" asp-action="Index">Клиенты</a></li> @*Localize*@
+                        <li><a asp-area="" asp-controller="Orders" asp-action="Index">Заказы</a></li> @*Localize*@
+                        <li><a asp-area="" asp-controller="Discounts" asp-action="Index">Скидки</a></li> @*Localize*@
                     </ul>
                 </div>
             </div>
@@ -45,7 +47,7 @@
             @RenderBody()
             <hr />
             <footer>
-                <p>&copy; 2019 - KotletkaShop</p>
+                <p>&copy; 2019 - Artem Koloskov</p>
             </footer>
         </div>
 

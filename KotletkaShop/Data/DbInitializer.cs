@@ -25,8 +25,8 @@ namespace KotletkaShop.Data
 
             // Инициализация тестовых коллекций
             Collection[] collections = {
-                new Collection{Handle="Stickers_Collection",Title="Стикеры, наклейки, декали",Body="<p>Здесь все наклейки</p>",Published=true,CompareSubject1=ProductTag,Condition1=IsEqualTo,CompareTo1="sticker",Image="/wwwroot/Content/Images/boob.jpeg",ImageAltText="Фото коллекции стикеров",SortBy=A_Z},
-                new Collection{Handle="CarParts_Collection",Title="Автозапчасти",Body="<p>Здесь все автозапчасти</p>",Published=false,CompareSubject1=ProductPrice,Condition1=IsLessThen,CompareTo1="260",Image="/wwwroot/Content/Images/boob.jpeg",ImageAltText="Фото коллекции запчастей",SortBy=Z_A}
+                new Collection{Handle="Stickers_Collection",Title="Стикеры, наклейки, декали",Body="<p>Здесь все наклейки</p>",Published=true,CompareSubject1=ProductTag,Condition1=IsEqualTo,CompareTo1="sticker",Image="/Content/Images/placeholder.jpg",ImageAltText="Фото коллекции стикеров",SortBy=A_Z},
+                new Collection{Handle="CarParts_Collection",Title="Автозапчасти",Body="<p>Здесь все автозапчасти</p>",Published=false,CompareSubject1=ProductPrice,Condition1=IsLessThen,CompareTo1="260",Image="/Content/Images/placeholder.jpg",ImageAltText="Фото коллекции запчастей",SortBy=Z_A}
             };
             foreach (Collection c in collections)
             {
@@ -36,8 +36,8 @@ namespace KotletkaShop.Data
 
             // Инициализация тестовых покупателей
             Customer[] customers = {
-                new Customer{FirstName="Иван",MiddleName="Иванович",LastName="Иванов",Country="Россия",City="Иваново",Province="Ивановская область",District="Ивановский район",Building="1и",ZipCode=111000,PhoneNumber="+79990001122",Email="ivanov@mail.ru",Note="Первый клиент, юху!",AcceptsMarketing=false,RegisterDate=DateTime.Parse("2013-02-13"),Image="/wwwroot/Content/Images/boob.jpeg",Tags="first, best"},
-                new Customer{FirstName="Петр",MiddleName="Петрович",LastName="Петров",Country="Украина",City="Петрово",Province="Петровская область",District="Петровский район",Building="2п",ZipCode=222000,PhoneNumber="+79990002233",Email="petrov@mail.ru",Note="Второй клиент, meh",AcceptsMarketing=false,RegisterDate=DateTime.Parse("2013-02-14"),Image="/wwwroot/Content/Images/boob.jpeg",Tags="second, meh"}
+                new Customer{FirstName="Иван",MiddleName="Иванович",LastName="Иванов",Country="Россия",City="Иваново",Province="Ивановская область",District="Ивановский район",Building="1и",ZipCode=111000,PhoneNumber="+79990001122",Email="ivanov@mail.ru",Note="Первый клиент, юху!",AcceptsMarketing=false,RegisterDate=DateTime.Parse("2013-02-13"),Image="/Content/Images/placeholder.jpg",Tags="first, best"},
+                new Customer{FirstName="Петр",MiddleName="Петрович",LastName="Петров",Country="Украина",City="Петрово",Province="Петровская область",District="Петровский район",Building="2п",ZipCode=222000,PhoneNumber="+79990002233",Email="petrov@mail.ru",Note="Второй клиент, meh",AcceptsMarketing=false,RegisterDate=DateTime.Parse("2013-02-14"),Image="/Content/Images/placeholder.jpg",Tags="second, meh"}
             };
             foreach (Customer c in customers)
             {
@@ -58,9 +58,9 @@ namespace KotletkaShop.Data
 
             // Инициализация тестовых товаров
             Product[] products = {
-                new Product{Handle="sticker_star",Title="Наклейка \"Звездочка\"",Body="<p>Лучшая наклейка в мире? Конечно! все любят звездочки!</p>",Vendor="Sticker-Shop",ProductTypeID=1,Tags="sticker, decal",Published=true,Option1Name="Размеры",Option1Value="2см, 3см, 4см",Weight=1,Quantity=-1,Price=250.0,Image="/wwwroot/Content/Images/boob.jpeg",ImageAltText="Фото стикера звездочки"},
-                new Product{Handle="bumper_carPart",Title="Запчасть \"Бампер\"",Body="<p>Лучшая Бампер в мире? Конечно! все любят звездбамперыочки!</p>",Vendor="Carpart-Shop",ProductTypeID=2,Tags="auto, engine, decal",Published=true,Option1Name="Цвета",Option1Value="Красный, Синий",Option2Name="Размеры",Option2Value="2см, 3см, 4см",Weight=15000,Quantity=18,Price=250.0,Image="/wwwroot/Content/Images/boob.jpeg",ImageAltText="Фото бампера"},
-                new Product{Handle="colenval",Title="Запчасть \"коленвал\"",Body="<p>Просто коленвал</p>",Vendor="Carpart-Shop",ProductTypeID=2,Tags="auto, bamper",Published=true,Weight=1,Quantity=-1,Price=250.0,Image="/wwwroot/Content/Images/boob.jpeg",ImageAltText="Фото коленвала"}
+                new Product{Handle="sticker_star",Title="Наклейка \"Звездочка\"",Body="<p>Лучшая наклейка в мире? Конечно! все любят звездочки!</p>",Vendor="Sticker-Shop",ProductTypeID=1,Tags="sticker, decal",Published=true,Option1Name="Размеры",Option1Value="2см, 3см, 4см",Weight=1,Quantity=-1,Price=250.0,Image="/Content/Images/placeholder.jpg",ImageAltText="Фото стикера звездочки"},
+                new Product{Handle="bumper_carPart",Title="Запчасть \"Бампер\"",Body="<p>Лучшая Бампер в мире? Конечно! все любят звездбамперыочки!</p>",Vendor="Carpart-Shop",ProductTypeID=2,Tags="auto, engine, decal",Published=true,Option1Name="Цвета",Option1Value="Красный, Синий",Option2Name="Размеры",Option2Value="2см, 3см, 4см",Weight=15000,Quantity=18,Price=250.0,Image="/Content/Images/placeholder.jpg",ImageAltText="Фото бампера"},
+                new Product{Handle="colenval",Title="Запчасть \"коленвал\"",Body="<p>Просто коленвал</p>",Vendor="Carpart-Shop",ProductTypeID=2,Tags="auto, bamper",Published=true,Weight=1,Quantity=-1,Price=250.0,Image="/Content/Images/placeholder.jpg",ImageAltText="Фото коленвала"}
             };
             foreach (Product p in products)
             {

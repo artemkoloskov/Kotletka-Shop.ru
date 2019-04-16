@@ -9,19 +9,24 @@
     <a asp-action="Create">Создать нового пользователя</a>
 </p>
 
-<div class="table">
-    @foreach (Customer customer in Model)
-    {
-        <a class="row" asp-action="Details" asp-route-id="@customer.CustomerID">
-            <div class="cell">
-                <b>@Html.DisplayFor(modelItem => customer.ScreenName)</b> @Html.DisplayFor(modelItem => customer.ScreenAddressShort)
-            </div>
-            <div class="cell">
-                @Html.DisplayFor(modelItem => customer.Orders.Count) заказов
-            </div>
-            <div class="cell">
-                @Html.DisplayFor(modelItem => customer.TotalSpent) р.
-            </div>
-        </a>
-    }
+<div class="admin-card">
+    <div class="table">
+        @foreach (Customer customer in Model)
+        {
+            <a class="row" asp-action="Details" asp-route-id="@customer.CustomerID">
+                <div class="cell">
+                    <img src="@customer.Image" alt="@customer.CustomerID+1" class="admin-thumbnaill" />
+                </div>
+                <div class="cell">
+                    <b>@Html.DisplayFor(modelItem => customer.ScreenName)</b> @Html.DisplayFor(modelItem => customer.ScreenAddressShort)
+                </div>
+                <div class="cell">
+                    @Html.DisplayFor(modelItem => customer.Orders.Count) заказов
+                </div>
+                <div class="cell">
+                    @Html.DisplayFor(modelItem => customer.TotalSpent) р.
+                </div>
+            </a>
+        }
+    </div>
 </div>

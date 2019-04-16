@@ -6,62 +6,67 @@
 
 <h4>@Model.Handle</h4>
 
-<div class="discount-options-panel">
-    <div class="order-products-table">
-        <div class="order-products-row">
-            <div class="order-products-cell">
-                <p>Тип скидки</p> @*Localize*@
+<div class="admin-card">
+    <div class="discount-options-panel">
+        <div class="order-products-table">
+            <div class="order-products-row">
+                <div class="order-products-cell">
+                    <p>Тип скидки</p> @*Localize*@
+                </div>
+                <div class="order-products-cell">
+                    <p>Скидка</p> @*Localize*@
+                </div>
             </div>
-            <div class="order-products-cell">
-                <p>Скидка</p> @*Localize*@
-            </div>
-        </div>
 
-        <div class="order-products-row">
-            <div class="order-products-cell">
-                <p>@Model.TypeToString()</p>
-            </div>
-            <div class="order-products-cell">
-                <p>@Model.ScreenValue()</p>
+            <div class="order-products-row">
+                <div class="order-products-cell">
+                    <p>@Model.TypeToString()</p>
+                </div>
+                <div class="order-products-cell">
+                    <p>@Model.ScreenValue()</p>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-<div class="discount-aplies-to-panel">
-    <p>Применимо к @Model.AppliesToToString()</p> @*Localize*@
-    @if (Model.AppliesTo == DiscountApplicableObjectTypes.SpecificCollections)
-    {
-        <p>Коллекции</p> @*Localize*@
-        <div class="order-products-table">
-            @foreach (Collection c in Model.ApplicableCollections)
-            {
-                <div class="order-products-row">
-                    <div class="order-products-cell">
-                        @c.Title
+<div class="admin-card">
+    <div class="discount-applys-to-panel">
+        <h4>Применимо к</h4> @*Localize*@
+        <p>@Model.AppliesToToString()</p>
+        @if (Model.AppliesTo == DiscountApplicableObjectTypes.SpecificCollections)
+        {
+            <p>Коллекции</p> @*Localize*@
+            <div class="order-products-table">
+                @foreach (Collection c in Model.ApplicableCollections)
+                {
+                    <div class="order-products-row">
+                        <div class="order-products-cell">
+                            @c.Title
+                        </div>
                     </div>
-                </div>
-            }
-        </div>
-    }
-    else if (Model.AppliesTo == DiscountApplicableObjectTypes.SpecificProducts)
-    {
-        <p>Товары</p> @*Localize*@
-        <div class="order-products-table">
-            @foreach (Product p in Model.ApplicableProducts)
-            {
-                <div class="order-products-row">
-                    <div class="order-products-cell">
-                        @p.Title
+                }
+            </div>
+        }
+        else if (Model.AppliesTo == DiscountApplicableObjectTypes.SpecificProducts)
+        {
+            <p>Товары</p> @*Localize*@
+            <div class="order-products-table">
+                @foreach (Product p in Model.ApplicableProducts)
+                {
+                    <div class="order-products-row">
+                        <div class="order-products-cell">
+                            @p.Title
+                        </div>
                     </div>
-                </div>
-            }
-        </div>
-    }
+                }
+            </div>
+        }
+    </div>
 </div>
 
-<div class="discount-minimum-requirement-panel">
-    <p>@Model.MinimumRequirementToString()</p>
+<div class="admin-card">
+    <h4>@Model.MinimumRequirementToString()</h4>
 
     @if (Model.MinimumRequirement == DiscountMinimumRequirementTypes.MinimumAmount)
     {
@@ -73,5 +78,71 @@
         <p>Количестов товаров в заказе должна быть более</p> @*Localize*@
         <p>@Html.DisplayFor(model => model.MinimumRequirementValue) шт.</p> @*Localize*@
     }
+</div>
+
+<div class="admin-card">
+    <div class="discout-customer-eligibility-panel">
+        <h4>Действительна для:</h4>
+        <p>@Model.CustomerEligibilityToString()</p>
+        @if (Model.CustomerEligibility == DiscountEligibleObjectTypes.SpecificCustomers)
+        {
+            foreach (Customer customer in Model.EligibleCustomers)
+            {
+                <div class="order-products-table">
+                    <div class="order-products-row">
+                        <div class="cell">
+                            <img src="@customer.Image" alt="@customer.CustomerID+1" class="admin-thumbnaill" />
+                        </div>
+                        <div class="cell">
+                            <p>@Html.DisplayFor(modelItem => customer.ScreenName)</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
+
+<div class="admin-card">
+    <div class="discount-usage-limits-panel">
+        <h4>Лимиты применения</h4> @*Localize*@
+        @if (Model.MaxTimesUsed > 0)
+        {
+            <p>Максимальное количество применений: @Html.DisplayFor(model => model.MaxTimesUsed)</p> @*Localize*@
+        }
+        else
+        {
+            <p>Неограниченное количество применений</p> @*Localize*@
+        }
+
+        @Html.DisplayFor(model => model.OneUsePerCustomer)
+    </div>
+</div>
+
+<div class="admin-card">
+    <div class="discount-active-period panel">
+        <h4>Период применения скидки</h4> @*Localize*@
+        <p>Начинает действовать в @Model.StartDate.ToLongDateString() в @Model.StartDate.ToShortTimeString()</p> @*Localize*@
+        @if (Model.EndDate < DateTime.ParseExact("2100-01-01 00:00:00", "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture))
+        {
+            <p>Прекращает действовать в действовать @Model.EndDate.ToLongDateString() в @Model.EndDate.ToShortTimeString()</p> @*Localize*@
+        }
+        else
+        {
+            <p>Действует бессрочно</p> @*Localize*@
+        }
+
+    </div>
+</div>
+
+<div class="admin-card">
+    <div class="discount-summary-panel">
+        <p>@Html.DisplayFor(model => model.Handle) @Html.DisplayFor(model => model.IsActive)</p>
+        <ul class="discount-summary-list" style="border-bottom: thin;">
+            <li>@Model.ToString()</li>
+            <li>Активна с @Model.StartDate.ToShortDateString()</li> @*Localize*@
+        </ul>
+        <p>Использована @Html.DisplayFor(model => model.TimesUsed) раз</p> @*Localize*@
+    </div>
 </div>
 

@@ -47,8 +47,10 @@ namespace KotletkaShop.Models
         public DiscountEligibleObjectTypes CustomerEligibility { get; set; }
         public string EligibleObjects { get; set; }
         public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public DateTime EndDate { get; set; } = DateTime.ParseExact("2100-01-01 00:00:00", "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
         public bool IsActive { get; set; } = false;
+        public int MaxTimesUsed { get; set; } = 0;
+        public bool OneUsePerCustomer { get; set; } = false;
         public int TimesUsed { get; set; }
 
         [NotMapped]
