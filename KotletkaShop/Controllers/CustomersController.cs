@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace KotletkaShop.Controllers
 {
+    [Area("Admin")]
     public class CustomersController : Controller
     {
         private readonly StoreContext _context;

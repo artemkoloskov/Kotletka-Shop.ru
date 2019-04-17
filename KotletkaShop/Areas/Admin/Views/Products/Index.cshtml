@@ -1,0 +1,43 @@
+﻿@model IEnumerable<KotletkaShop.Models.Product>
+@{
+    ViewData["Title"] = "Список товаров"; // Localize
+}
+
+<h2>Заказы</h2> @*Localize*@
+
+<p>
+    <a asp-action="Create">Создать новый товар</a> @*Localize*@
+</p>
+
+<div class="admin-card">
+    <div class="table">
+        @foreach (Product product in Model)
+        {
+            <a class="row" asp-action="Details" asp-route-id="@product.ProductID">
+                <div class="cell">
+                    <img src="@product.Image" alt="@product.ImageAltText" class="admin-thumbnaill" />
+                </div>
+                <div class="cell">
+                    @Html.DisplayFor(modelItem => product.Title)
+                </div>
+                <div class="cell">
+                    @if (product.Quantity >= 0)
+                    {
+                        @Html.DisplayFor(modelItem => product.Quantity)
+                    }
+                    else
+                    {
+                        <p>Не отслеживается</p>  @*Localize*@
+                    }
+                </div>
+                <div class="cell">
+                    @Html.DisplayFor(modelItem => product.ProductType.Handle)
+                </div>
+                <div class="cell">
+                    @Html.DisplayFor(modelItem => product.Vendor)
+                </div>
+            </a>
+        }
+    </div>
+</div>
+

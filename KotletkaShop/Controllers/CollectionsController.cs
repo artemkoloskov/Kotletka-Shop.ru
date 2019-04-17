@@ -14,6 +14,7 @@ using static KotletkaShop.Models.SortingOrders;
 
 namespace KotletkaShop.Controllers
 {
+    [Area("Admin")]
     public class CollectionsController : Controller
     {
         private readonly StoreContext _context;

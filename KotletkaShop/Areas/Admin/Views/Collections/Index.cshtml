@@ -13,7 +13,7 @@
     <div class="table">
         @foreach (Collection collection in Model)
         {
-            <a class="row" asp-action="Details" asp-route-id="@collection.CollectionID">
+            <a class="row" asp-area="Admin" asp-controller="Collections" asp-action="Details" asp-route-id="@collection.CollectionID">
                 <div class="cell">
                     <img src="@collection.Image" alt="@collection.ImageAltText" class="admin-thumbnaill" />
                 </div>

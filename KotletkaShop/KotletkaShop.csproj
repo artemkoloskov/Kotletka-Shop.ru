@@ -20,12 +20,19 @@
     <Folder Include="wwwroot\Content\" />
     <Folder Include="wwwroot\Content\Images\" />
     <Folder Include="Data\" />
-    <Folder Include="Views\Collections\" />
-    <Folder Include="Views\Orders\" />
-    <Folder Include="Views\Customers\" />
-    <Folder Include="Views\Discounts\" />
+    <Folder Include="Areas\" />
+    <Folder Include="Areas\Admin\" />
+    <Folder Include="Areas\Admin\Views\" />
+    <Folder Include="Areas\Admin\Views\Collections\" />
+    <Folder Include="Areas\Admin\Views\Customers\" />
+    <Folder Include="Areas\Admin\Views\Discounts\" />
+    <Folder Include="Areas\Admin\Views\Orders\" />
+    <Folder Include="Areas\Admin\Views\Products\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Controllers\Home1Controller.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="Views\Admin\Collections\Index.cshtml" />
   </ItemGroup>
 </Project>
