@@ -22,11 +22,12 @@ namespace KotletkaShop.Models
         public string Note { get; set; }
         public bool AcceptsMarketing { get; set; } = false;
         public DateTime RegisterDate { get; set; }
-        public string Image { get; set; }
+        public int ImageID { get; set; }
         public string Tags { get; set; }
 
         public ICollection<Order> Orders { get; set; }
         public ICollection<Payment> Payments { get; set; }
+        public Image Image { get; set; }
 
         public string ScreenName
         {

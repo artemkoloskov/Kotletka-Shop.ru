@@ -15,7 +15,13 @@
         {
             <a class="row" asp-action="Details" asp-route-id="@product.ProductID">
                 <div class="cell">
-                    <img src="@product.Image" alt="@product.ImageAltText" class="admin-thumbnaill" />
+                    @foreach (ProductImage productImage in product.ProductImages)
+                    {
+                        if (productImage.IsDefaultImage)
+                        {
+                            <img src="@productImage.Image.Path" alt="@productImage.Image.AltText" class="admin-thumbnaill" />
+                        }
+                    }
                 </div>
                 <div class="cell">
                     @Html.DisplayFor(modelItem => product.Title)

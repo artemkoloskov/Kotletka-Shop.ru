@@ -27,7 +27,12 @@ namespace KotletkaShop.Controllers
         public async Task<IActionResult> Index()
         {
             // загрузка из контекста списка товаров.
-            List<Product> products = await _context.Products.Include(o => o.ProductType).AsNoTracking().ToListAsync();
+            List<Product> products = await _context.Products
+                .Include(p => p.ProductType)
+                .Include(p => p.ProductImages)
+                    .ThenInclude(pi => pi.Image)
+                .AsNoTracking()
+                .ToListAsync();
 
             return View(products);
         }
@@ -44,7 +49,9 @@ namespace KotletkaShop.Controllers
             }
 
             Product product = await _context.Products
-                .Include(o => o.ProductType)
+                .Include(p => p.ProductType)
+                .Include(p => p.ProductImages)
+                    .ThenInclude(pi => pi.Image)
                 .AsNoTracking()
                 .SingleOrDefaultAsync(m => m.ProductID == id);
 

@@ -1,5 +1,77 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model KotletkaShop.Models.Product
+
 @{
+    ViewData["Title"] = Model.Title;
 }
+
+<div>
+    <a asp-action="Index">&lt;Назад</a> @*Localize*@
+</div>
+
+<div class="admin-card">
+    <h4>@Html.DisplayFor(model => model.Title)</h4>
+
+    <div class="product-body">
+        <h5>Описание</h5> @*Localize*@
+        <p>@Html.DisplayFor(model => model.Body)</p>
+    </div>
+
+    <div class="product-images">
+        <h5>Изображения товара</h5> @*Localize*@
+        @foreach (ProductImage productImage in Model.ProductImages)
+        {
+            <img src="@productImage.Image.Path" alt="@productImage.Image.AltText" class="product-image" />
+        }
+    </div>
+
+    <div class="product-type">
+        <h5>Тип товара</h5> @*Localize*@
+        @Html.DisplayFor(model => model.ProductType.Handle)
+    </div>
+
+    <div class="product-vendor">
+        <h5>Производитель</h5>  @*Localize*@
+        @Html.DisplayFor(model => model.Vendor)
+    </div>
+
+    <div class="product-tags">
+        <h5>Тэги</h5>  @*Localize*@
+        @Html.DisplayFor(model => model.Tags)
+    </div>
+
+    <div class="product-visible-from">
+        @if (Model.VisibleFrom == DateTime.Parse("0001-01-01") && Model.VisibleUntil == DateTime.Parse("0001-01-01"))
+        {
+            <h5>Виден всегда</h5> @*Localize*@
+        }
+        else
+        {
+            if (Model.VisibleFrom > DateTime.Parse("0001-01-01"))
+            {
+                <h5>Виден начиная с</h5> @*Localize*@
+                @Model.VisibleFrom.ToLongDateString() @Model.VisibleFrom.ToShortTimeString()
+            }
+            if (Model.VisibleUntil > DateTime.Parse("0001-01-01"))
+            {
+                <h5>Виден до</h5> @*Localize*@
+                @Model.VisibleUntil.ToLongDateString() @Model.VisibleUntil.ToShortTimeString()
+            }
+        }
+    </div>
+
+    <div class="product-collections-list">
+        <div class="order-products-table">
+            @foreach (Collection collection in Model.Collections)
+            {   
+                <div class="order-products-row">
+                    <div class="order-products-cell">
+                        <img src="@collection.Image.Path" alt="@collection.Image.AltText" class="admin-thumbnail" />
+                    </div>
+                    <div class="order-products-cell">
+                        @collection.Title
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

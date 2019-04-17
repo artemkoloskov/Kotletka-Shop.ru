@@ -15,7 +15,7 @@
         {
             <a class="row" asp-action="Details" asp-route-id="@customer.CustomerID">
                 <div class="cell">
-                    <img src="@customer.Image" alt="@customer.CustomerID+1" class="admin-thumbnaill" />
+                    <img src="@customer.Image.Path" alt="@customer.Image.AltText" class="admin-thumbnaill" />
                 </div>
                 <div class="cell">
                     <b>@Html.DisplayFor(modelItem => customer.ScreenName)</b> @Html.DisplayFor(modelItem => customer.ScreenAddressShort)

@@ -15,7 +15,7 @@
         {
             <a class="row" asp-area="Admin" asp-controller="Collections" asp-action="Details" asp-route-id="@collection.CollectionID">
                 <div class="cell">
-                    <img src="@collection.Image" alt="@collection.ImageAltText" class="admin-thumbnaill" />
+                    <img src="@collection.Image.Path" alt="@collection.Image.AltText" class="admin-thumbnaill" />
                 </div>
                 <div class="cell">
                     @Html.DisplayFor(modelItem => collection.Title)

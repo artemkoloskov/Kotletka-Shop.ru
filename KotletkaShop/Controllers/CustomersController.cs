@@ -24,7 +24,12 @@ namespace KotletkaShop.Controllers
         // GET: /<controller>/
         public async Task<IActionResult> Index()
         {
-            List<Models.Customer> customers = await _context.Customers.Include(c => c.Orders).Include(c => c.Payments).AsNoTracking().ToListAsync();
+            List<Models.Customer> customers = await _context.Customers
+                .Include(c => c.Orders)
+                .Include(c => c.Payments)
+                .Include(c => c.Image)
+                .AsNoTracking()
+                .ToListAsync();
 
             return View(customers);
         }
@@ -37,7 +42,9 @@ namespace KotletkaShop.Controllers
             }
 
             Customer customer = await _context.Customers
-                .Include(c => c.Orders).Include(c => c.Payments)
+                .Include(c => c.Orders)
+                .Include(c => c.Payments)
+                .Include(c => c.Image)
                 .AsNoTracking()
                 .SingleOrDefaultAsync(c => c.CustomerID == id);
 
