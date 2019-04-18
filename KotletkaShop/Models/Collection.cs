@@ -69,6 +69,25 @@ namespace KotletkaShop.Models
         public List<Product> Products { get; set; }
 
         /// <summary>
+        /// Проверка на наличе товара с определнным идентификатором
+        /// </summary>
+        /// <returns><c>true</c>, если список товаров содержит
+        /// товар с идентификтором <c>false</c> если не содержит.</returns>
+        /// <param name="id">Идентификатор товара.</param>
+        public bool ProductsListContains(int? id)
+        {
+            foreach (Product p in Products)
+            {
+                if (p.ProductID == id)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Преобразует условия записанные в объект в читаемую форму
         /// </summary>
         /// <value>Строка с условиями наполнения коллекции в читаемоей форме</value>

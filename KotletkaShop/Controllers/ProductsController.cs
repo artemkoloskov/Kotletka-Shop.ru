@@ -48,6 +48,7 @@ namespace KotletkaShop.Controllers
                 return NotFound();
             }
 
+            // Загрузка товара из БД по идентификатору
             Product product = await _context.Products
                 .Include(p => p.ProductType)
                 .Include(p => p.ProductImages)
@@ -58,6 +59,26 @@ namespace KotletkaShop.Controllers
             if (product == null)
             {
                 return NotFound();
+            }
+
+            // Загрузка коллекций из БД
+            List<Collection> collections = await _context.Collections
+                .Include(c => c.Image)
+                .AsNoTracking()
+                .ToListAsync();
+
+            // проверка коллеций на факт содержания текущего товара
+            foreach (Collection c in collections)
+            {
+                c.Products = await c.GetCollectionProducts(_context);
+
+                if (c.ProductsListContains(id))
+                {
+                    // Если коллекция содержит данный товар - записываем ее в 
+                    // список коллекций, в которых состоит товар, для отображения
+                    // в деталях товара
+                    product.Collections.Add(c);
+                }
             }
 
             return View(product);

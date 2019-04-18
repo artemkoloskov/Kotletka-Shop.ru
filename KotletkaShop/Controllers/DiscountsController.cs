@@ -35,6 +35,7 @@ namespace KotletkaShop.Controllers
                 return NotFound();
             }
 
+            // Загрузка скидки из БД по идентификатору
             Discount discount = await _context.Discounts
                 .AsNoTracking()
                 .SingleOrDefaultAsync(c => c.DiscountID == id);

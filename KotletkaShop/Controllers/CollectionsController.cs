@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using KotletkaShop.Data;
 using KotletkaShop.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using static KotletkaShop.Models.CollectionCompareSubjects;
-using static KotletkaShop.Models.CollectionConditions;
-using static KotletkaShop.Models.SortingOrders;
-
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace KotletkaShop.Controllers
 {
@@ -31,7 +23,9 @@ namespace KotletkaShop.Controllers
         /// <returns>The index.</returns>
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Collections.Include(c => c.Image).ToListAsync());
+            return View(await _context.Collections
+                .Include(c => c.Image)
+                .ToListAsync());
         }
 
         /// <summary>
@@ -45,6 +39,7 @@ namespace KotletkaShop.Controllers
                 return NotFound();
             }
 
+            // загрузка коллекции из БД по идентификтору
             Collection collection = await _context.Collections
                 .Include(c => c.Image)
                 .SingleOrDefaultAsync(m => m.CollectionID == id);
@@ -55,6 +50,40 @@ namespace KotletkaShop.Controllers
             }
 
             collection.Products = await collection.GetCollectionProducts(_context);
+
+            return View(collection);
+        }
+
+        // GET: Collections/Create
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: Collections/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(
+            [Bind("Handle,Title,Body,Published,CompareSubject1," +
+                "Condition1,CompareTo1,CompareSubject2,Condition2," +
+                "CompareTo2,CompareSubject3,Condition3,CompareTo3," +
+                "MatchAllConditions,ImageID,SortByImage")] Collection collection)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    _context.Add(collection);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            catch (DbUpdateException)
+            {
+                ModelState.AddModelError("", "Не удалось сохранить изменения. " +
+                    "Попробуйте еще раз, если проблема повторяется " +
+                    "Свяжитесь с вашим системным администратором.");
+            }
 
             return View(collection);
         }

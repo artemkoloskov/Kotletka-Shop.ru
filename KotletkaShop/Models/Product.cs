@@ -30,6 +30,6 @@ namespace KotletkaShop.Models
         public ICollection<ProductImage> ProductImages { get; set; }
 
         [NotMapped]
-        public List<Collection> Collections { get; set; } = new List<Collection>(); // TODO добавить загрузку коллекций в которых состоит продукт
+        public List<Collection> Collections { get; set; } = new List<Collection>();
     }
 }

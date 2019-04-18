@@ -43,6 +43,7 @@ namespace KotletkaShop.Controllers
                 return NotFound();
             }
 
+            //  загрузка заказа из БД по идентификатору
             Order order = await _context.Orders
                 .Include(o => o.Payments)
                 .Include(o => o.Customer)
