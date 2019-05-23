@@ -50,5 +50,39 @@ namespace KotletkaShop.Controllers
 
             return customer == null ? NotFound() : (IActionResult)View(customer);
         }
+
+        // GET: Customers/Create
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: Customers/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(
+            [Bind("FirstName,MiddleName,LastName,Country,City,Province," +
+                "District,Street,Building,Apartment,ZipCode," +
+                "PhoneNumber,Email,Note,AcceptsMarketing,RegisterDate," +
+                "ImageID,Tags")] Customer customer)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    _context.Add(customer);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            catch (DbUpdateException)
+            {
+                ModelState.AddModelError("", "Не удалось сохранить изменения. " +
+                    "Попробуйте еще раз, если проблема повторяется " +
+                    "Свяжитесь с вашим системным администратором.");
+            }
+
+            return View(customer);
+        }
     }
 }

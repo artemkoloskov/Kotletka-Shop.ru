@@ -114,5 +114,40 @@ namespace KotletkaShop.Controllers
 
             return products;
         }
+
+        // GET: Customers/Create
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: Collections/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(
+            [Bind("Handle,Type,Value,AppliesTo,ApplicableObjects," +
+                "MinimumRequirement,MinimumRequirementValue," +
+                "CustomerEligibility,EligibleObjects,StartDate," +
+                "EndDate,IsActive,MaxTimesUsed,OneUsePerCustomer," +
+                "TimesUsed")] Discount discount)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    _context.Add(discount);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            catch (DbUpdateException)
+            {
+                ModelState.AddModelError("", "Не удалось сохранить изменения. " +
+                    "Попробуйте еще раз, если проблема повторяется " +
+                    "Свяжитесь с вашим системным администратором.");
+            }
+
+            return View(discount);
+        }
     }
 }

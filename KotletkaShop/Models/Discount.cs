@@ -51,7 +51,7 @@ namespace KotletkaShop.Models
         public bool IsActive { get; set; } = false;
         public int MaxTimesUsed { get; set; } = 0;
         public bool OneUsePerCustomer { get; set; } = false;
-        public int TimesUsed { get; set; }
+        public int TimesUsed { get; set; } = 0;
 
         [NotMapped]
         public List<Product> ApplicableProducts { get; set; }
@@ -66,7 +66,10 @@ namespace KotletkaShop.Models
             {
                 List<int> ids = new List<int> ();
 
-                ids = ApplicableObjects.Split(',').Select(Int32.Parse).ToList();
+                if (ApplicableObjects != null)
+                {
+                    ids = ApplicableObjects.Split(',').Select(Int32.Parse).ToList();
+                }
 
                 return ids;
             }
@@ -78,7 +81,10 @@ namespace KotletkaShop.Models
             {
                 List<int> ids = new List<int> ();
 
-                ids = EligibleObjects.Split(',').Select(Int32.Parse).ToList();
+                if (EligibleObjects != null)
+                {
+                    ids = EligibleObjects.Split(',').Select(Int32.Parse).ToList();
+                }
 
                 return ids;
             }

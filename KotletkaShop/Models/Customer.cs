@@ -50,9 +50,12 @@ namespace KotletkaShop.Models
             {
                 double totalSpent = 0;
 
-                foreach (Payment p in Payments)
+                if (Payments != null)
                 {
-                    totalSpent += p.Amount;
+                    foreach (Payment p in Payments)
+                    {
+                        totalSpent += p.Amount;
+                    }
                 }
 
                 return totalSpent;

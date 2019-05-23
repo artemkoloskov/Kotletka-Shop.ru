@@ -83,5 +83,39 @@ namespace KotletkaShop.Controllers
 
             return View(product);
         }
+
+        // GET: Products/Create
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: Products/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(
+            [Bind("Handle,Title,Body,Vendor,ProductTypeID,Tags," +
+                "Published,Option1Name,Option1Value,Option2Name,Option2Value," +
+                "Option3Name,Option3Value,Weight,Quantity,Price," +
+                "VisibleFrom,VisibleUntil")] Product product)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    _context.Add(product);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            catch (DbUpdateException)
+            {
+                ModelState.AddModelError("", "Не удалось сохранить изменения. " +
+                    "Попробуйте еще раз, если проблема повторяется " +
+                    "Свяжитесь с вашим системным администратором.");
+            }
+
+            return View(product);
+        }
     }
 }

@@ -1,0 +1,100 @@
+﻿@model KotletkaShop.Models.Discount
+
+@{
+    ViewData["Title"] = "Создание новой скидки"; @*Localize*@
+}
+
+<h1>Создание новой скидки</h1> @*Localize*@
+
+<hr />
+<div class="admin-card">
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Handle" class="control-label"></label>
+            <input asp-for="Handle" class="form-control" autocomplete="off" />
+            <span asp-validation-for="Handle" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Type" class="control-label"></label>
+            <input asp-for="Type" class="form-control" autocomplete="off" />
+            <span asp-validation-for="Type" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Value" class="control-label"></label>
+            <input asp-for="Value" class="form-control" autocomplete="off" />
+            <span asp-validation-for="Value" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="AppliesTo" class="control-label"></label>
+            <input asp-for="AppliesTo" class="form-control" autocomplete="off" />
+            <span asp-validation-for="AppliesTo" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="ApplicableObjects" class="control-label"></label>
+            <input asp-for="ApplicableObjects" class="form-control" autocomplete="off" />
+            <span asp-validation-for="ApplicableObjects" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="MinimumRequirement" class="control-label"></label>
+            <input asp-for="MinimumRequirement" class="form-control" autocomplete="off" />
+            <span asp-validation-for="MinimumRequirement" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="MinimumRequirementValue" class="control-label"></label>
+            <input asp-for="MinimumRequirementValue" class="form-control" autocomplete="off" />
+            <span asp-validation-for="MinimumRequirementValue" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="CustomerEligibility" class="control-label"></label>
+            <input asp-for="CustomerEligibility" class="form-control" autocomplete="off" />
+            <span asp-validation-for="CustomerEligibility" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="EligibleObjects" class="control-label"></label>
+            <input asp-for="EligibleObjects" class="form-control" autocomplete="off" />
+            <span asp-validation-for="EligibleObjects" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="StartDate" class="control-label"></label>
+            <input asp-for="StartDate" class="form-control" autocomplete="off" />
+            <span asp-validation-for="StartDate" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="EndDate" class="control-label"></label>
+            <input asp-for="EndDate" class="form-control" autocomplete="off" />
+            <span asp-validation-for="EndDate" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="IsActive" class="control-label"></label>
+            <input asp-for="IsActive" class="form-control" autocomplete="off" />
+            <span asp-validation-for="IsActive" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="MaxTimesUsed" class="control-label"></label>
+            <input asp-for="MaxTimesUsed" class="form-control" autocomplete="off" />
+            <span asp-validation-for="MaxTimesUsed" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="OneUsePerCustomer" class="control-label"></label>
+            <input asp-for="OneUsePerCustomer" class="form-control" autocomplete="off" />
+            <span asp-validation-for="OneUsePerCustomer" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="TimesUsed" class="control-label"></label>
+            <input asp-for="TimesUsed" class="form-control" autocomplete="off" />
+            <span asp-validation-for="TimesUsed" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Create" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
+
+<div>
+    <a asp-action="Index">Назад к списку клиентов</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
