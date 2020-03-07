@@ -32,11 +32,12 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a asp-area="Admin" asp-controller="Collections" asp-action="Index">Коллекции</a></li> @*Localize*@
-                        <li><a asp-area="Admin" asp-controller="Customers" asp-action="Index">Клиенты</a></li> @*Localize*@
-                        <li><a asp-area="Admin" asp-controller="Orders" asp-action="Index">Заказы</a></li> @*Localize*@
-                        <li><a asp-area="Admin" asp-controller="Discounts" asp-action="Index">Скидки</a></li> @*Localize*@
-                        <li><a asp-area="Admin" asp-controller="Products" asp-action="Index">Товары</a></li> @*Localize*@
+                        <li><a asp-area="" asp-controller="Collection" asp-action="Index">Коллекции</a></li> @*Localize*@
+                        <li><a asp-area="Admin" asp-controller="Collections" asp-action="Index">Адм. Коллекции</a></li> @*Localize*@
+                        <li><a asp-area="Admin" asp-controller="Customers" asp-action="Index">Адм. Клиенты</a></li> @*Localize*@
+                        <li><a asp-area="Admin" asp-controller="Orders" asp-action="Index">Адм. Заказы</a></li> @*Localize*@
+                        <li><a asp-area="Admin" asp-controller="Discounts" asp-action="Index">Адм. Скидки</a></li> @*Localize*@
+                        <li><a asp-area="Admin" asp-controller="Products" asp-action="Index">Адм. Товары</a></li> @*Localize*@
                     </ul>
                 </div>
             </div>
@@ -48,7 +49,7 @@
             @RenderBody()
             <hr />
             <footer>
-                <p>&copy; 2019 - Artem Koloskov</p>
+                <p>&copy; 2019-2020 - Artem Koloskov</p>
             </footer>
         </div>
 

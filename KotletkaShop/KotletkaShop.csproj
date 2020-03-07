@@ -11,7 +11,10 @@
     <LangVersion>default</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.App">
+      <PrivateAssets Condition="'%(PackageReference.Version)' == ''">all</PrivateAssets>
+      <Publish Condition="'%(PackageReference.Version)' == ''">true</Publish>
+    </PackageReference>
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.1.4" />
   </ItemGroup>
@@ -28,6 +31,8 @@
     <Folder Include="Areas\Admin\Views\Discounts\" />
     <Folder Include="Areas\Admin\Views\Orders\" />
     <Folder Include="Areas\Admin\Views\Products\" />
+    <Folder Include="Views\Collection\" />
+    <Folder Include="Areas\Admin\Controllers\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Controllers\Home1Controller.cs" />

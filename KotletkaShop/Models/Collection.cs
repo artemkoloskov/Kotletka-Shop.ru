@@ -231,7 +231,7 @@ namespace KotletkaShop.Models
             return products;
         }
 
-        /// <summary>
+        /// <summary>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           ary>
         /// Поиск продуктов по условиям коллекции
         /// </summary>
         /// <returns>Список продуктов</returns>
@@ -247,7 +247,7 @@ namespace KotletkaShop.Models
                 switch (condition)
                 {
                     case IsEqualTo:
-                        products.AddRange(await _context.Products.Where(p => p.Tags.Contains(compareTo)).ToListAsync());
+                        products.AddRange(await _context.Products.Where(p => p.Tags.Contains(compareTo)).Include(p => p.ProductImages).ThenInclude(pi => pi.Image).ToListAsync());
                         break;
                 }
             }
@@ -256,16 +256,16 @@ namespace KotletkaShop.Models
                 switch (condition)
                 {
                     case IsEqualTo:
-                        products.AddRange(await _context.Products.Where(p => p.Price.Equals(double.Parse(compareTo))).ToListAsync());
+                        products.AddRange(await _context.Products.Where(p => p.Price.Equals(double.Parse(compareTo))).Include(p => p.ProductImages).ThenInclude(pi => pi.Image).ToListAsync());
                         break;
                     case IsGreaterThan:
-                        products.AddRange(await _context.Products.Where(p => p.Price > double.Parse(compareTo)).ToListAsync());
+                        products.AddRange(await _context.Products.Where(p => p.Price > double.Parse(compareTo)).Include(p => p.ProductImages).ThenInclude(pi => pi.Image).ToListAsync());
                         break;
                     case IsLessThen:
-                        products.AddRange(await _context.Products.Where(p => p.Price < double.Parse(compareTo)).ToListAsync());
+                        products.AddRange(await _context.Products.Where(p => p.Price < double.Parse(compareTo)).Include(p => p.ProductImages).ThenInclude(pi => pi.Image).ToListAsync());
                         break;
                     case IsNotEqualTo:
-                        products.AddRange(await _context.Products.Where(p => !p.Price.Equals(double.Parse(compareTo))).ToListAsync());
+                        products.AddRange(await _context.Products.Where(p => !p.Price.Equals(double.Parse(compareTo))).Include(p => p.ProductImages).ThenInclude(pi => pi.Image).ToListAsync());
                         break;
                 }
             }
@@ -274,13 +274,13 @@ namespace KotletkaShop.Models
                 switch (condition)
                 {
                     case IsEqualTo:
-                        products.AddRange(await _context.Products.Where(p => p.Quantity == int.Parse(compareTo)).ToListAsync());
+                        products.AddRange(await _context.Products.Where(p => p.Quantity == int.Parse(compareTo)).Include(p => p.ProductImages).ThenInclude(pi => pi.Image).ToListAsync());
                         break;
                     case IsGreaterThan:
-                        products.AddRange(await _context.Products.Where(p => p.Quantity > int.Parse(compareTo)).ToListAsync());
+                        products.AddRange(await _context.Products.Where(p => p.Quantity > int.Parse(compareTo)).Include(p => p.ProductImages).ThenInclude(pi => pi.Image).ToListAsync());
                         break;
                     case IsLessThen:
-                        products.AddRange(await _context.Products.Where(p => p.Quantity < int.Parse(compareTo)).ToListAsync());
+                        products.AddRange(await _context.Products.Where(p => p.Quantity < int.Parse(compareTo)).Include(p => p.ProductImages).ThenInclude(pi => pi.Image).ToListAsync());
                         break;
                 }
             }
@@ -289,22 +289,22 @@ namespace KotletkaShop.Models
                 switch (condition)
                 {
                     case IsEqualTo:
-                        products.AddRange(await _context.Products.Where(p => p.Title == compareTo).ToListAsync());
+                        products.AddRange(await _context.Products.Where(p => p.Title == compareTo).Include(p => p.ProductImages).ThenInclude(pi => pi.Image).ToListAsync());
                         break;
                     case IsNotEqualTo:
-                        products.AddRange(await _context.Products.Where(p => p.Title != compareTo).ToListAsync());
+                        products.AddRange(await _context.Products.Where(p => p.Title != compareTo).Include(p => p.ProductImages).ThenInclude(pi => pi.Image).ToListAsync());
                         break;
                     case StartsWith:
-                        products.AddRange(await _context.Products.Where(p => p.Title.StartsWith(compareTo, StringComparison.CurrentCultureIgnoreCase)).ToListAsync());
+                        products.AddRange(await _context.Products.Where(p => p.Title.StartsWith(compareTo, StringComparison.CurrentCultureIgnoreCase)).Include(p => p.ProductImages).ThenInclude(pi => pi.Image).ToListAsync());
                         break;
                     case EndsWith:
-                        products.AddRange(await _context.Products.Where(p => p.Title.EndsWith(compareTo, StringComparison.CurrentCultureIgnoreCase)).ToListAsync());
+                        products.AddRange(await _context.Products.Where(p => p.Title.EndsWith(compareTo, StringComparison.CurrentCultureIgnoreCase)).Include(p => p.ProductImages).ThenInclude(pi => pi.Image).ToListAsync());
                         break;
                     case Contains:
-                        products.AddRange(await _context.Products.Where(p => p.Title.Contains(compareTo, StringComparison.CurrentCultureIgnoreCase)).ToListAsync());
+                        products.AddRange(await _context.Products.Where(p => p.Title.Contains(compareTo, StringComparison.CurrentCultureIgnoreCase)).Include(p => p.ProductImages).ThenInclude(pi => pi.Image).ToListAsync());
                         break;
                     case DoesNotContain:
-                        products.AddRange(await _context.Products.Where(p => !p.Title.Contains(compareTo, StringComparison.CurrentCultureIgnoreCase)).ToListAsync());
+                        products.AddRange(await _context.Products.Where(p => !p.Title.Contains(compareTo, StringComparison.CurrentCultureIgnoreCase)).Include(p => p.ProductImages).ThenInclude(pi => pi.Image).ToListAsync());
                         break;
                 }
             }
@@ -313,22 +313,22 @@ namespace KotletkaShop.Models
                 switch (condition)
                 {
                     case IsEqualTo:
-                        products.AddRange(await _context.Products.Where(p => p.ProductType.Handle == compareTo).ToListAsync());
+                        products.AddRange(await _context.Products.Where(p => p.ProductType.Handle == compareTo).Include(p => p.ProductImages).ThenInclude(pi => pi.Image).ToListAsync());
                         break;
                     case IsNotEqualTo:
-                        products.AddRange(await _context.Products.Where(p => p.ProductType.Handle != compareTo).ToListAsync());
+                        products.AddRange(await _context.Products.Where(p => p.ProductType.Handle != compareTo).Include(p => p.ProductImages).ThenInclude(pi => pi.Image).ToListAsync());
                         break;
                     case StartsWith:
-                        products.AddRange(await _context.Products.Where(p => p.ProductType.Handle.StartsWith(compareTo, StringComparison.CurrentCultureIgnoreCase)).ToListAsync());
+                        products.AddRange(await _context.Products.Where(p => p.ProductType.Handle.StartsWith(compareTo, StringComparison.CurrentCultureIgnoreCase)).Include(p => p.ProductImages).ThenInclude(pi => pi.Image).ToListAsync());
                         break;
                     case EndsWith:
-                        products.AddRange(await _context.Products.Where(p => p.ProductType.Handle.EndsWith(compareTo, StringComparison.CurrentCultureIgnoreCase)).ToListAsync());
+                        products.AddRange(await _context.Products.Where(p => p.ProductType.Handle.EndsWith(compareTo, StringComparison.CurrentCultureIgnoreCase)).Include(p => p.ProductImages).ThenInclude(pi => pi.Image).ToListAsync());
                         break;
                     case Contains:
-                        products.AddRange(await _context.Products.Where(p => p.ProductType.Handle.Contains(compareTo, StringComparison.CurrentCultureIgnoreCase)).ToListAsync());
+                        products.AddRange(await _context.Products.Where(p => p.ProductType.Handle.Contains(compareTo, StringComparison.CurrentCultureIgnoreCase)).Include(p => p.ProductImages).ThenInclude(pi => pi.Image).ToListAsync());
                         break;
                     case DoesNotContain:
-                        products.AddRange(await _context.Products.Where(p => !p.ProductType.Handle.Contains(compareTo, StringComparison.CurrentCultureIgnoreCase)).ToListAsync());
+                        products.AddRange(await _context.Products.Where(p => !p.ProductType.Handle.Contains(compareTo, StringComparison.CurrentCultureIgnoreCase)).Include(p => p.ProductImages).ThenInclude(pi => pi.Image).ToListAsync());
                         break;
                 }
             }
@@ -337,22 +337,22 @@ namespace KotletkaShop.Models
                 switch (condition)
                 {
                     case IsEqualTo:
-                        products.AddRange(await _context.Products.Where(p => p.Vendor == compareTo).ToListAsync());
+                        products.AddRange(await _context.Products.Where(p => p.Vendor == compareTo).Include(p => p.ProductImages).ThenInclude(pi => pi.Image).ToListAsync());
                         break;
                     case IsNotEqualTo:
-                        products.AddRange(await _context.Products.Where(p => p.Vendor != compareTo).ToListAsync());
+                        products.AddRange(await _context.Products.Where(p => p.Vendor != compareTo).Include(p => p.ProductImages).ThenInclude(pi => pi.Image).ToListAsync());
                         break;
                     case StartsWith:
-                        products.AddRange(await _context.Products.Where(p => p.Vendor.StartsWith(compareTo, StringComparison.CurrentCultureIgnoreCase)).ToListAsync());
+                        products.AddRange(await _context.Products.Where(p => p.Vendor.StartsWith(compareTo, StringComparison.CurrentCultureIgnoreCase)).Include(p => p.ProductImages).ThenInclude(pi => pi.Image).ToListAsync());
                         break;
                     case EndsWith:
-                        products.AddRange(await _context.Products.Where(p => p.Vendor.EndsWith(compareTo, StringComparison.CurrentCultureIgnoreCase)).ToListAsync());
+                        products.AddRange(await _context.Products.Where(p => p.Vendor.EndsWith(compareTo, StringComparison.CurrentCultureIgnoreCase)).Include(p => p.ProductImages).ThenInclude(pi => pi.Image).ToListAsync());
                         break;
                     case Contains:
-                        products.AddRange(await _context.Products.Where(p => p.Vendor.Contains(compareTo, StringComparison.CurrentCultureIgnoreCase)).ToListAsync());
+                        products.AddRange(await _context.Products.Where(p => p.Vendor.Contains(compareTo, StringComparison.CurrentCultureIgnoreCase)).Include(p => p.ProductImages).ThenInclude(pi => pi.Image).ToListAsync());
                         break;
                     case DoesNotContain:
-                        products.AddRange(await _context.Products.Where(p => !p.Vendor.Contains(compareTo, StringComparison.CurrentCultureIgnoreCase)).ToListAsync());
+                        products.AddRange(await _context.Products.Where(p => !p.Vendor.Contains(compareTo, StringComparison.CurrentCultureIgnoreCase)).Include(p => p.ProductImages).ThenInclude(pi => pi.Image).ToListAsync());
                         break;
                 }
             }
@@ -361,16 +361,16 @@ namespace KotletkaShop.Models
                 switch (condition)
                 {
                     case IsEqualTo:
-                        products.AddRange(await _context.Products.Where(p => p.Weight.Equals(double.Parse(compareTo))).ToListAsync());
+                        products.AddRange(await _context.Products.Where(p => p.Weight.Equals(double.Parse(compareTo))).Include(p => p.ProductImages).ThenInclude(pi => pi.Image).ToListAsync());
                         break;
                     case IsGreaterThan:
-                        products.AddRange(await _context.Products.Where(p => p.Weight > double.Parse(compareTo)).ToListAsync());
+                        products.AddRange(await _context.Products.Where(p => p.Weight > double.Parse(compareTo)).Include(p => p.ProductImages).ThenInclude(pi => pi.Image).ToListAsync());
                         break;
                     case IsLessThen:
-                        products.AddRange(await _context.Products.Where(p => p.Weight < double.Parse(compareTo)).ToListAsync());
+                        products.AddRange(await _context.Products.Where(p => p.Weight < double.Parse(compareTo)).Include(p => p.ProductImages).ThenInclude(pi => pi.Image).ToListAsync());
                         break;
                     case IsNotEqualTo:
-                        products.AddRange(await _context.Products.Where(p => !p.Weight.Equals(double.Parse(compareTo))).ToListAsync());
+                        products.AddRange(await _context.Products.Where(p => !p.Weight.Equals(double.Parse(compareTo))).Include(p => p.ProductImages).ThenInclude(pi => pi.Image).ToListAsync());
                         break;
                 }
             }

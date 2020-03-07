@@ -31,5 +31,20 @@ namespace KotletkaShop.Models
 
         [NotMapped]
         public List<Collection> Collections { get; set; } = new List<Collection>();
+        public ProductImage DefaultProductImage
+        {
+            get
+            {
+                foreach (ProductImage p in ProductImages)
+                {
+                    if (p.IsDefaultImage)
+                    {
+                        return p;
+                    }
+                }
+
+                return null;
+            }
+        }
     }
 }

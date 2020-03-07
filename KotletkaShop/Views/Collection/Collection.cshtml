@@ -1,0 +1,29 @@
+﻿@model KotletkaShop.Models.Collection
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<h4>@Html.DisplayFor(model => model.Title)</h4>
+
+<div class="admin-card">
+    <div class="collection-details-panel">
+        <p>@Html.DisplayFor(model => model.Title)</p>
+        <p>@Html.DisplayFor(model => model.Handle)</p>
+        <p>@Html.DisplayFor(model => model.Body)</p>
+    </div>
+</div>
+
+<div class="admin-card">
+    <div class="collection-products-panel">
+        @foreach (Product product in Model.Products)
+        {
+            <img src="@product.DefaultProductImage.Image.Path" alt="@product.DefaultProductImage.Image.AltText" class="admin-thumbnail" />
+            <p>@product.Title</p>
+        }
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Назад к списку</a>
+</div>
