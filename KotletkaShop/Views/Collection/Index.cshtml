@@ -9,20 +9,17 @@
     <div class="table">
         @foreach (Collection collection in Model)
         {
-            <a class="row" asp-area="" asp-controller="Collection" asp-action="Collection" asp-route-id="@collection.CollectionID">
-                <div class="cell">
-                    <img src="@collection.Image.Path" alt="@collection.Image.AltText" class="admin-thumbnail" />
-                </div>
-                <div class="cell">
-                    @Html.DisplayFor(modelItem => collection.Title)
-                </div>
-                <div class="cell">
-                    @foreach (string condition in collection.ScreenConditions)
-                    {
-                        <p>@condition</p>
-                    }
-                </div>
-            </a>
+            if (collection.Published)
+            {
+                <a class="row" asp-area="" asp-controller="Collection" asp-action="Collection" asp-route-id="@collection.CollectionID">
+                    <div class="cell">
+                        <img src="@collection.Image.Path" alt="@collection.Image.AltText" class="admin-thumbnail" />
+                    </div>
+                    <div class="cell">
+                        @Html.DisplayFor(modelItem => collection.Title)
+                    </div>
+                </a>
+            }
         }
     </div>
 </div>

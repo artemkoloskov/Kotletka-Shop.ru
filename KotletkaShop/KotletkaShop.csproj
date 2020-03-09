@@ -33,6 +33,10 @@
     <Folder Include="Areas\Admin\Views\Products\" />
     <Folder Include="Views\Collection\" />
     <Folder Include="Areas\Admin\Controllers\" />
+    <Folder Include="Views\Product\" />
+    <Folder Include="Areas\User\" />
+    <Folder Include="Areas\User\Controllers\" />
+    <Folder Include="Areas\User\Views\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Controllers\Home1Controller.cs" />

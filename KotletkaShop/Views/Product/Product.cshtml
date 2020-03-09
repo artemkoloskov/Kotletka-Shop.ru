@@ -1,0 +1,37 @@
+﻿@model KotletkaShop.Models.Product
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div>
+    <a asp-action="Index">&lt;Назад</a> @*Localize*@ @*TODO: возврат в контроллер из которого пришел юзер*@
+</div>
+
+<div class="admin-card">
+    <h4>@Html.DisplayFor(model => model.Title)</h4>
+
+    <div class="product-body">
+        <h5>Описание</h5> @*Localize*@
+        <p>@Html.DisplayFor(model => model.Body)</p>
+    </div>
+
+    <div class="product-price">
+        <p>Стоимость: </p> @*Localize*@
+        <p>@Html.DisplayFor(model => model.Price) р.</p>
+    </div>
+
+    <div class="product-images">
+        @foreach (ProductImage productImage in Model.ProductImages)
+        {
+            <img src="@productImage.Image.Path" alt="@productImage.Image.AltText" class="product-image" />
+        }
+    </div>
+
+    <div class="product-vendor">
+        <h5>Производитель</h5>  @*Localize*@
+        @Html.DisplayFor(model => model.Vendor)
+    </div>
+
+
+</div>

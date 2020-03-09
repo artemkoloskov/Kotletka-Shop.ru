@@ -1,24 +1,16 @@
-﻿@model KotletkaShop.Models.Collection
-
+﻿@model IEnumerable<KotletkaShop.Models.Product>
 @{
-    ViewData["Title"] = Model.Title;
+    ViewData["Title"] = "Все товары"; @*LOCALIZE*@
 }
 
-<h4>@Html.DisplayFor(model => model.Title)</h4>
+<h2>Товары</h2> @*LOCALIZE*@
 
 <div class="admin-card">
-    <div class="collection-details-panel">
-        <p>@Html.DisplayFor(model => model.Title)</p>
-        <p>@Html.DisplayFor(model => model.Body)</p>
-    </div>
-</div>
-
-<div class="admin-card">
-    <div class="collection-products-panel">
-        @foreach (Product product in Model.Products)
+    <div class="table">
+        @foreach (Product product in Model)
         {
             if (DateTime.Now >= product.VisibleFrom && DateTime.Now <= product.VisibleUntil
-            || product.VisibleFrom == DateTime.Parse("0001-01-01") && product.VisibleUntil == DateTime.Parse("0001-01-01")
+            || product.VisibleFrom == DateTime.Parse ("0001-01-01") && product.VisibleUntil == DateTime.Parse("0001-01-01")
             || DateTime.Now >= product.VisibleFrom && product.VisibleUntil == DateTime.Parse("0001-01-01"))
             {
                 <a class="row" asp-controller="Product" asp-action="Product" asp-route-id="@product.ProductID">
@@ -28,9 +20,6 @@
                 </a>
             }
         }
-        </div>
+    </div>
 </div>
 
-<div>
-    <a asp-action="Index">Назад к списку</a>
-</div>
