@@ -1,0 +1,105 @@
+﻿@model KotletkaShop.Models.Collection
+
+@{
+    ViewData["Title"] = "Редактирование коллекции"; @*Localize*@
+}
+
+    <h1>Редактирование коллекци &quot;@Model.Title&quot;</h1> @*Localize*@
+
+<hr />
+<div class="admin-card">
+    <form asp-action="Edit">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Handle" class="control-label"></label>
+            <input asp-for="Handle" class="form-control" autocomplete="off" />
+            <span asp-validation-for="Handle" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Title" class="control-label"></label>
+            <input asp-for="Title" class="form-control" autocomplete="off" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Body" class="control-label"></label>
+            <input asp-for="Body" class="form-control" autocomplete="off" />
+            <span asp-validation-for="Body" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Published" class="control-label"></label>
+            <input asp-for="Published" class="form-control" autocomplete="off" />
+            <span asp-validation-for="Published" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="MatchAllConditions" class="control-label"></label>
+            <input asp-for="MatchAllConditions" class="form-control" autocomplete="off" />
+            <span asp-validation-for="MatchAllConditions" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="CompareSubject1" class="control-label"></label>
+            <input asp-for="CompareSubject1" class="form-control" autocomplete="off" />
+            <span asp-validation-for="CompareSubject1" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Condition1" class="control-label"></label>
+            <input asp-for="Condition1" class="form-control" autocomplete="off" />
+            <span asp-validation-for="Condition1" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="CompareTo1" class="control-label"></label>
+            <input asp-for="CompareTo1" class="form-control" autocomplete="off" />
+            <span asp-validation-for="CompareTo1" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="CompareSubject2" class="control-label"></label>
+            <input asp-for="CompareSubject2" class="form-control" autocomplete="off" />
+            <span asp-validation-for="CompareSubject2" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Condition2" class="control-label"></label>
+            <input asp-for="Condition2" class="form-control" autocomplete="off" />
+            <span asp-validation-for="Condition2" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="CompareTo2" class="control-label"></label>
+            <input asp-for="CompareTo2" class="form-control" autocomplete="off" />
+            <span asp-validation-for="CompareTo2" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="CompareSubject3" class="control-label"></label>
+            <input asp-for="CompareSubject3" class="form-control" autocomplete="off" />
+            <span asp-validation-for="CompareSubject3" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Condition3" class="control-label"></label>
+            <input asp-for="Condition3" class="form-control" autocomplete="off" />
+            <span asp-validation-for="Condition3" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="CompareTo3" class="control-label"></label>
+            <input asp-for="CompareTo3" class="form-control" autocomplete="off" />
+            <span asp-validation-for="CompareTo3" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ImageID" class="control-label"></label>
+            <input asp-for="ImageID" class="form-control" autocomplete="off" />
+            <span asp-validation-for="ImageID" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Сохранить изменения" class="btn btn-primary" /> @*Localize*@
+        </div>
+    </form>
+</div>
+
+<div>
+    <a asp-action="Index">Назад к списку</a> @*Localize*@
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

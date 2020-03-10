@@ -13,7 +13,8 @@ namespace KotletkaShop.Models
 {
     public enum CollectionCompareSubjects
     {
-        ProductTitle = 1,
+        NoSubject = 0,
+        ProductTitle,
         ProductTag,
         ProductType,
         ProductVendor,
@@ -24,7 +25,8 @@ namespace KotletkaShop.Models
 
     public enum CollectionConditions
     {
-        IsEqualTo = 1,
+        NoCondition = 0,
+        IsEqualTo,
         IsNotEqualTo,
         IsGreaterThan,
         IsLessThen,

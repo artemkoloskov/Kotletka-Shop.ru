@@ -13,20 +13,20 @@
     <div class="table">
         @foreach (Collection collection in Model)
         {
-            <a class="row" asp-area="Admin" asp-controller="Collections" asp-action="Details" asp-route-id="@collection.CollectionID">
-                <div class="cell">
-                    <img src="@collection.Image.Path" alt="@collection.Image.AltText" class="admin-thumbnail" />
-                </div>
-                <div class="cell">
-                    @Html.DisplayFor(modelItem => collection.Title)
-                </div>
-                <div class="cell">
-                    @foreach (string condition in collection.ScreenConditions)
-                    {
-                        <p>@condition</p>
-                    }
-                </div>
-            </a>
+        <a class="row" asp-area="Admin" asp-controller="Collections" asp-action="Details" asp-route-id="@collection.CollectionID">
+            <div class="cell">
+                <img src="@collection.Image.Path" alt="@collection.Image.AltText" class="admin-thumbnail" />
+            </div>
+            <div class="cell">
+                @Html.DisplayFor(modelItem => collection.Title)
+            </div>
+            <div class="cell">
+                @foreach (string condition in collection.ScreenConditions)
+                {
+                    <p>@condition</p>
+                }
+            </div>
+        </a>
         }
     </div>
 </div>

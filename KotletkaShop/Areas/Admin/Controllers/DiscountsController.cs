@@ -149,5 +149,59 @@ namespace KotletkaShop.Controllers
 
             return View(discount);
         }
+
+        // GET: Admin/Discounts/Edit/5
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Discount discount = await _context.Discounts.FindAsync(id);
+            if (discount == null)
+            {
+                return NotFound();
+            }
+            return View(discount);
+        }
+
+        // POST: Admin/Discounts/Edit/5
+        [HttpPost, ActionName("Edit")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditPost(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Discount discountToUpdate = await _context.Discounts.FirstOrDefaultAsync(s => s.DiscountID == id);
+
+            if (await TryUpdateModelAsync<Discount>(
+                discountToUpdate,
+                "",
+                c => c.ApplicableObjects, c => c.AppliesTo,
+                c => c.CustomerEligibility, c => c.EligibleObjects, c => c.EndDate,
+                c => c.Handle, c => c.IsActive, c => c.MaxTimesUsed,
+                c => c.MinimumRequirement, c => c.MinimumRequirementValue,
+                c => c.OneUsePerCustomer, c => c.StartDate, c => c.TimesUsed,
+                c => c.Type, c => c.Value))
+            {
+                try
+                {
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (DbUpdateException)
+                {
+                    ModelState.AddModelError("", "Не удалось сохранить изменения. " +
+                    "Попробуйте еще раз, если проблема повторяется " +
+                    "Свяжитесь с вашим системным администратором.");
+                }
+            }
+
+            return View(discountToUpdate);
+        }
     }
 }

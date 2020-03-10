@@ -34,5 +34,8 @@
 </div>
 
 <div>
-    <a asp-action="Index">Назад к списку</a>
+    <a asp-action="Index">Назад к списку</a> @*LOCALIZE*@
+    <a asp-area="Admin" asp-controller="Collections" asp-action="Edit" asp-route-id="@Model.CollectionID">
+        Редактировать @*LOCALIZE*@
+    </a>
 </div>

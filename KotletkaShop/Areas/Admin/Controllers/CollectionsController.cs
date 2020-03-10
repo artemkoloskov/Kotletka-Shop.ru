@@ -87,5 +87,56 @@ namespace KotletkaShop.Controllers
 
             return View(collection);
         }
+
+        // GET: Admin/Collections/Edit/5
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Collection collection = await _context.Collections.FindAsync(id);
+            if (collection == null)
+            {
+                return NotFound();
+            }
+            return View(collection);
+        }
+
+        // POST: Admin/Collections/Edit/5
+        [HttpPost, ActionName("Edit")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditPost(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Collection collectionToUpdate = await _context.Collections.FirstOrDefaultAsync(s => s.CollectionID == id);
+
+            if (await TryUpdateModelAsync<Collection>(
+                collectionToUpdate,
+                "",
+                c => c.Handle, c => c.MatchAllConditions, c => c.Published, c => c.Title, c => c.Body, c => c.CompareSubject1,
+                c => c.CompareSubject2, c => c.CompareSubject3, c => c.CompareTo1, c => c.CompareTo2, c => c.CompareTo3,
+                c => c.Condition1, c => c.Condition2, c => c.Condition3, c => c.ImageID))
+            {
+                try
+                {
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (DbUpdateException)
+                {
+                    ModelState.AddModelError("", "Не удалось сохранить изменения. " +
+                    "Попробуйте еще раз, если проблема повторяется " +
+                    "Свяжитесь с вашим системным администратором.");
+                }
+            }
+
+            return View(collectionToUpdate);
+        }
     }
 }

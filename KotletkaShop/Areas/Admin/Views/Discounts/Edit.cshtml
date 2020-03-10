@@ -1,14 +1,14 @@
 ﻿@model KotletkaShop.Models.Discount
 
 @{
-    ViewData["Title"] = "Создание новой скидки"; @*Localize*@
+    ViewData["Title"] = "Редактирование скидки"; @*Localize*@
 }
 
-<h1>Создание новой скидки</h1> @*Localize*@
+<h1>Редактирование скидки @Model.Handle</h1> @*Localize*@
 
 <hr />
 <div class="admin-card">
-    <form asp-action="Create">
+    <form asp-action="Edit">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">
             <label asp-for="Handle" class="control-label"></label>
@@ -86,13 +86,13 @@
             <span asp-validation-for="TimesUsed" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <input type="submit" value="Create" class="btn btn-primary" />
+            <input type="submit" value="Сохранить изменения" class="btn btn-primary" />
         </div>
     </form>
 </div>
 
 <div>
-    <a asp-action="Index">Назад к списку скидок</a>
+    <a asp-action="Index">Назад к списку скидок</a> @*Localize*@
 </div>
 
 @section Scripts {
