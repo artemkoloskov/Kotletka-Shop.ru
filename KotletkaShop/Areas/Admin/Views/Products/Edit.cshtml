@@ -1,0 +1,115 @@
+﻿@model KotletkaShop.Models.Product
+
+@{
+    ViewData["Title"] = "Редактирование товара"; @*Localize*@
+}
+
+<h1>Редактирование товара @Model.Title</h1> @*Localize*@
+
+<hr />
+<div class="admin-card">
+    <form asp-action="Edit">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Handle" class="control-label"></label>
+            <input asp-for="Handle" class="form-control" autocomplete="off" />
+            <span asp-validation-for="Handle" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Title" class="control-label"></label>
+            <input asp-for="Title" class="form-control" autocomplete="off" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Body" class="control-label"></label>
+            <input asp-for="Body" class="form-control" autocomplete="off" />
+            <span asp-validation-for="Body" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Vendor" class="control-label"></label>
+            <input asp-for="Vendor" class="form-control" autocomplete="off" />
+            <span asp-validation-for="Vendor" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="ProductTypeID" class="control-label"></label>
+            <input asp-for="ProductTypeID" class="form-control" autocomplete="off" />
+            <span asp-validation-for="ProductTypeID" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Tags" class="control-label"></label>
+            <input asp-for="Tags" class="form-control" autocomplete="off" />
+            <span asp-validation-for="Tags" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Published" class="control-label"></label>
+            <input asp-for="Published" class="form-control" autocomplete="off" />
+            <span asp-validation-for="Published" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Option1Name" class="control-label"></label>
+            <input asp-for="Option1Name" class="form-control" autocomplete="off" />
+            <span asp-validation-for="Option1Name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Option1Value" class="control-label"></label>
+            <input asp-for="Option1Value" class="form-control" autocomplete="off" />
+            <span asp-validation-for="Option1Value" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Option2Name" class="control-label"></label>
+            <input asp-for="Option2Name" class="form-control" autocomplete="off" />
+            <span asp-validation-for="Option2Name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Option2Value" class="control-label"></label>
+            <input asp-for="Option2Value" class="form-control" autocomplete="off" />
+            <span asp-validation-for="Option2Value" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Option3Name" class="control-label"></label>
+            <input asp-for="Option3Name" class="form-control" autocomplete="off" />
+            <span asp-validation-for="Option3Name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Option3Value" class="control-label"></label>
+            <input asp-for="Option3Value" class="form-control" autocomplete="off" />
+            <span asp-validation-for="Option3Value" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Weight" class="control-label"></label>
+            <input asp-for="Weight" class="form-control" autocomplete="off" />
+            <span asp-validation-for="Weight" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Quantity" class="control-label"></label>
+            <input asp-for="Quantity" class="form-control" autocomplete="off" />
+            <span asp-validation-for="Quantity" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Price" class="control-label"></label>
+            <input asp-for="Price" class="form-control" autocomplete="off" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="VisibleFrom" class="control-label"></label>
+            <input asp-for="VisibleFrom" class="form-control" autocomplete="off" />
+            <span asp-validation-for="VisibleFrom" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="VisibleUntil" class="control-label"></label>
+            <input asp-for="VisibleUntil" class="form-control" autocomplete="off" />
+            <span asp-validation-for="VisibleUntil" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Сохранить изменения" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
+
+<div>
+    <a asp-action="Index">Назад к списку товаров</a> @*Localize*@
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

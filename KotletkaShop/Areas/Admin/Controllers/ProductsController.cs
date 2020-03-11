@@ -97,7 +97,7 @@ namespace KotletkaShop.Controllers
             [Bind("Handle,Title,Body,Vendor,ProductTypeID,Tags," +
                 "Published,Option1Name,Option1Value,Option2Name,Option2Value," +
                 "Option3Name,Option3Value,Weight,Quantity,Price," +
-                "VisibleFrom,VisibleUntil")] Product product)
+                "VisibleFrom,VisibleUntil,ProductImages")] Product product)
         {
             try
             {
@@ -116,6 +116,61 @@ namespace KotletkaShop.Controllers
             }
 
             return View(product);
+        }
+
+        // GET: Admin/Products/Edit/5
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Product product = await _context.Products.FindAsync(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            return View(product);
+        }
+
+        // POST: Admin/Products/Edit/5
+        [HttpPost, ActionName("Edit")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditPost(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Product productToUpdate = await _context.Products.FirstOrDefaultAsync(s => s.ProductID == id);
+
+            if (await TryUpdateModelAsync<Product>(
+                productToUpdate,
+                "",
+                c => c.Handle, c => c.Title, c => c.Body, c => c.Vendor,
+                c => c.ProductTypeID, c => c.Tags, c => c.Published,
+                c => c.Option1Name, c => c.Option1Value,
+                c => c.Option2Name, c => c.Option2Value,
+                c => c.Option3Name, c => c.Option3Value, c => c.Weight,
+                c => c.Quantity, c => c.Price, c => c.VisibleFrom,
+                c => c.VisibleUntil))
+            {
+                try
+                {
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (DbUpdateException)
+                {
+                    ModelState.AddModelError("", "Не удалось сохранить изменения. " +
+                    "Попробуйте еще раз, если проблема повторяется " +
+                    "Свяжитесь с вашим системным администратором.");
+                }
+            }
+
+            return View(productToUpdate);
         }
     }
 }

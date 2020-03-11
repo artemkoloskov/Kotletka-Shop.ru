@@ -62,7 +62,7 @@
     <div class="product-collections-list">
         <div class="order-products-table">
             @foreach (Collection collection in Model.Collections)
-            {   
+            {
                 <div class="order-products-row">
                     <div class="order-products-cell">
                         <img src="@collection.Image.Path" alt="@collection.Image.AltText" class="admin-thumbnail" />
@@ -74,4 +74,8 @@
             }
         </div>
     </div>
+
+    <a asp-area="Admin" asp-controller="Products" asp-action="Edit" asp-route-id="@Model.ProductID">
+        Редактировать @*LOCALIZE*@
+    </a>
 </div>

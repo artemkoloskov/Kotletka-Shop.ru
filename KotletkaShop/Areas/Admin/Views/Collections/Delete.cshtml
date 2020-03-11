@@ -1,0 +1,26 @@
+﻿@model KotletkaShop.Models.Collection
+
+@{
+    ViewData["Title"] = "Удаление коллекции"; @*LOCALIZE*@
+}
+
+<h1>Удаление коллекции &quot;@Model.Title&quot;</h1>
+<p class="text-danger">@ViewData["ErrorMessage"]</p>
+<h3>Вы уверены, что хотите удалить эту коллекцию?</h3> @*LOCALIZE*@
+<div>
+    <h4>Коллекция</h4> @*LOCALIZE*@
+    <hr />
+    <div class="admin-card">
+        <div class="collection-details-panel">
+            <p>@Html.DisplayFor(model => model.Title)</p>
+            <p>@Html.DisplayFor(model => model.Handle)</p>
+            <p>@Html.DisplayFor(model => model.Body)</p>
+        </div>
+    </div>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="CollectionID" />
+        <input type="submit" value="Удалить" class="btn btn-danger" /> | @*LOCALIZE*@
+        <a asp-action="Index">Назад к списку коллекций</a>
+    </form>
+</div>

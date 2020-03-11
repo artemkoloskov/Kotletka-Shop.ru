@@ -138,5 +138,54 @@ namespace KotletkaShop.Controllers
 
             return View(collectionToUpdate);
         }
+
+        // GET: Collections/Delete/5
+        public async Task<IActionResult> Delete(int? id, bool? saveChangesError = false)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var collection = await _context.Collections
+                .AsNoTracking()
+                .FirstOrDefaultAsync(m => m.CollectionID == id);
+            if (collection == null)
+            {
+                return NotFound();
+            }
+
+            if (saveChangesError.GetValueOrDefault())
+            {
+                ViewData["ErrorMessage"] =
+                    "Удаление не удалось. Попробуйте еще раз, если проблема повторяется " +
+                    "see your system administrator.";
+            }
+
+            return View(collection);
+        }
+
+        // POST: Collections/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            Collection collection = await _context.Collections.FindAsync(id);
+            if (collection == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            try
+            {
+                _context.Collections.Remove(collection);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch (DbUpdateException)
+            {
+                return RedirectToAction(nameof(Delete), new { id = id, saveChangesError = true });
+            }
+        }
     }
 }

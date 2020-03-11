@@ -35,6 +35,11 @@ namespace KotletkaShop.Models
         {
             get
             {
+                if (ProductImages == null)
+                {
+                    return null;
+                }
+
                 foreach (ProductImage p in ProductImages)
                 {
                     if (p.IsDefaultImage)

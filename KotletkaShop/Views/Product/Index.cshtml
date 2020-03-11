@@ -9,15 +9,18 @@
     <div class="table">
         @foreach (Product product in Model)
         {
-            if (DateTime.Now >= product.VisibleFrom && DateTime.Now <= product.VisibleUntil
-            || product.VisibleFrom == DateTime.Parse ("0001-01-01") && product.VisibleUntil == DateTime.Parse("0001-01-01")
-            || DateTime.Now >= product.VisibleFrom && product.VisibleUntil == DateTime.Parse("0001-01-01"))
+            if (product.Published)
             {
+                if (DateTime.Now >= product.VisibleFrom && DateTime.Now <= product.VisibleUntil
+                || product.VisibleFrom == DateTime.Parse("0001-01-01") && product.VisibleUntil == DateTime.Parse("0001-01-01")
+                || DateTime.Now >= product.VisibleFrom && product.VisibleUntil == DateTime.Parse("0001-01-01"))
+                {
                 <a class="row" asp-controller="Product" asp-action="Product" asp-route-id="@product.ProductID">
                     <img src="@product.DefaultProductImage.Image.Path" alt="@product.DefaultProductImage.Image.AltText" class="admin-thumbnail" />
                     <p>@product.Title</p>
                     <p>@product.Price р.</p> @*LOCALIZE*@
                 </a>
+                }
             }
         }
     </div>
