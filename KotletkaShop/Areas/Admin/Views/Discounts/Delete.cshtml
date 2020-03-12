@@ -1,0 +1,25 @@
+﻿@model KotletkaShop.Models.Discount
+
+@{
+    ViewData["Title"] = "Удаление скидки"; @*LOCALIZE*@
+}
+
+<h1>Удаление скидки &quot;@Model.Handle&quot;</h1>
+<p class="text-danger">@ViewData["ErrorMessage"]</p>
+<h3>Вы уверены, что хотите удалить эту скидку?</h3> @*LOCALIZE*@
+<div>
+    <h4>Скидка</h4> @*LOCALIZE*@
+    <hr />
+    <div class="admin-card">
+        <div class="collection-details-panel">
+            <p>@Html.DisplayFor(model => model.Handle)</p>
+            <p>@Html.DisplayFor(model => model.Value)</p>
+        </div>
+    </div>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="DiscountID" />
+        <input type="submit" value="Удалить" class="btn btn-danger" /> | @*LOCALIZE*@
+        <a asp-action="Index">Назад к списку скидок</a>
+    </form>
+</div>

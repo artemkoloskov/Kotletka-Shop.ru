@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
+using System.Linq;
 using KotletkaShop.Data;
 using KotletkaShop.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -21,9 +23,24 @@ namespace KotletkaShop.Controllers
         /// Инициализация главного пердставления списка коллекций товаров
         /// </summary>
         /// <returns>The index.</returns>
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder)
         {
-            return View(await _context.Collections
+            ViewData["TitleSortParm"] = String.IsNullOrEmpty(sortOrder) ? "title_desc" : "";
+
+            IQueryable<Collection> collections = from s in _context.Collections
+                           select s;
+
+            switch (sortOrder)
+            {
+                case "title_desc":
+                    collections = collections.OrderByDescending(s => s.Title);
+                    break;
+                default:
+                    collections = collections.OrderBy(s => s.Title);
+                    break;
+            }
+
+            return View(await collections
                 .Include(c => c.Image)
                 .ToListAsync());
         }
@@ -147,7 +164,7 @@ namespace KotletkaShop.Controllers
                 return NotFound();
             }
 
-            var collection = await _context.Collections
+            Collection collection = await _context.Collections
                 .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.CollectionID == id);
             if (collection == null)
@@ -159,7 +176,7 @@ namespace KotletkaShop.Controllers
             {
                 ViewData["ErrorMessage"] =
                     "Удаление не удалось. Попробуйте еще раз, если проблема повторяется " +
-                    "see your system administrator.";
+                    "Свяжитесь с вашим системным администратором.";
             }
 
             return View(collection);

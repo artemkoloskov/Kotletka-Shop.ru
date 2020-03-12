@@ -203,5 +203,54 @@ namespace KotletkaShop.Controllers
 
             return View(discountToUpdate);
         }
+
+        // GET: Discounts/Delete/5
+        public async Task<IActionResult> Delete(int? id, bool? saveChangesError = false)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Discount discount = await _context.Discounts
+                .AsNoTracking()
+                .FirstOrDefaultAsync(m => m.DiscountID == id);
+            if (discount == null)
+            {
+                return NotFound();
+            }
+
+            if (saveChangesError.GetValueOrDefault())
+            {
+                ViewData["ErrorMessage"] =
+                    "Удаление не удалось. Попробуйте еще раз, если проблема повторяется " +
+                    "Свяжитесь с вашим системным администратором.";
+            }
+
+            return View(discount);
+        }
+
+        // POST: Discounts/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            Discount discount = await _context.Discounts.FindAsync(id);
+            if (discount == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            try
+            {
+                _context.Discounts.Remove(discount);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch (DbUpdateException)
+            {
+                return RedirectToAction(nameof(Delete), new { id = id, saveChangesError = true });
+            }
+        }
     }
 }

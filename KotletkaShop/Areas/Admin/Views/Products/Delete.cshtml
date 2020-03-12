@@ -1,0 +1,25 @@
+﻿@model KotletkaShop.Models.Product
+
+@{
+    ViewData["Title"] = "Удаление товара"; @*LOCALIZE*@
+}
+
+<h1>Удаление товара &quot;@Model.Title&quot;</h1>
+<p class="text-danger">@ViewData["ErrorMessage"]</p>
+<h3>Вы уверены, что хотите удалить этот товар?</h3> @*LOCALIZE*@
+<div>
+    <h4>Товар</h4> @*LOCALIZE*@
+    <hr />
+    <div class="admin-card">
+        <div class="collection-details-panel">
+            <p>@Html.DisplayFor(model => model.Title)</p>
+            <p>@Html.DisplayFor(model => model.Handle)</p>
+        </div>
+    </div>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="ProductID" />
+        <input type="submit" value="Удалить" class="btn btn-danger" /> | @*LOCALIZE*@
+        <a asp-action="Index">Назад к списку товаров</a>
+    </form>
+</div>

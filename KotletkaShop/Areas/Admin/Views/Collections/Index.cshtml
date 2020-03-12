@@ -11,6 +11,9 @@
 
 <div class="admin-card">
     <div class="table">
+        <div class="row">
+            <p class="cell"></p><a class="cell" asp-action="Index" asp-route-sortOrder="@ViewData["TitleSortParm"]">Название</a><p class="cell"></p> @*LOCALIZE*@
+        </div>
         @foreach (Collection collection in Model)
         {
         <a class="row" asp-area="Admin" asp-controller="Collections" asp-action="Details" asp-route-id="@collection.CollectionID">

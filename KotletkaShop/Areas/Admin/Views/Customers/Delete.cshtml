@@ -1,0 +1,26 @@
+﻿@model KotletkaShop.Models.Customer
+
+@{
+    ViewData["Title"] = "Удаление клиента"; @*LOCALIZE*@
+}
+
+<h1>Удаление клиента &quot;@Model.ScreenName&quot;</h1>
+<p class="text-danger">@ViewData["ErrorMessage"]</p>
+<h3>Вы уверены, что хотите удалить этого пользователя?</h3> @*LOCALIZE*@
+<div>
+    <h4>Клиент</h4> @*LOCALIZE*@
+    <hr />
+    <div class="admin-card">
+        <div class="collection-details-panel">
+            <p>@Html.DisplayFor(model => model.ScreenName)</p>
+            <p>@Html.DisplayFor(model => model.ScreenAddressShort)</p>
+            <p>@Html.DisplayFor(model => model.CustomerID)</p>
+        </div>
+    </div>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="CustomerID" />
+        <input type="submit" value="Удалить" class="btn btn-danger" /> | @*LOCALIZE*@
+        <a asp-action="Index">Назад к списку клиентов</a>
+    </form>
+</div>

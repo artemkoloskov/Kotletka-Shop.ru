@@ -65,7 +65,6 @@
 
 <div>
     <a asp-action="Index">Назад к списку</a>@*LOCALIZE*@
-    <a asp-area="Admin" asp-controller="Customers" asp-action="Edit" asp-route-id="@Model.CustomerID">
-        Редактировать @*LOCALIZE*@
-    </a>
+    <a asp-action="Edit" asp-route-id="@Model.CustomerID">Редактировать</a> @*LOCALIZE*@
+    <a asp-action="Delete" asp-route-id="@Model.CustomerID">Удалить</a> @*LOCALIZE*@
 </div>

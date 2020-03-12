@@ -75,7 +75,6 @@
         </div>
     </div>
 
-    <a asp-area="Admin" asp-controller="Products" asp-action="Edit" asp-route-id="@Model.ProductID">
-        Редактировать @*LOCALIZE*@
-    </a>
+    <a asp-area="Admin" asp-controller="Products" asp-action="Edit" asp-route-id="@Model.ProductID">Редактировать</a> @*LOCALIZE*@
+    <a asp-action="Delete" asp-route-id="@Model.ProductID">Удалить</a> @*LOCALIZE*@
 </div>
