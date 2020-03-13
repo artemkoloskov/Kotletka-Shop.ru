@@ -11,6 +11,9 @@
 
 <div class="admin-card">
     <div class="table">
+        <div class="row">
+            <a class="cell" asp-action="Index" asp-route-sortOrder="@ViewData["HandleSortParm"]">Название</a><p class="cell"></p> @*LOCALIZE*@
+        </div>
         @foreach (Discount discount in Model)
         {
             <a class="row" asp-action="Details" asp-route-id="@discount.DiscountID">

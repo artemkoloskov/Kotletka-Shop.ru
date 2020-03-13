@@ -11,6 +11,14 @@
 
 <div class="admin-card">
     <div class="table">
+        <div class="row">
+            <a class="cell" asp-action="Index" asp-route-sortOrder="@ViewData["IdSortParm"]">ID</a> @*LOCALIZE*@
+            <a class="cell" asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]">Дата</a> @*LOCALIZE*@
+            <a class="cell" asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">Имя</a> @*LOCALIZE*@
+            <a class="cell" asp-action="Index" asp-route-sortOrder="@ViewData["PaidSortParm"]">Оплачен</a> @*LOCALIZE*@
+            <a class="cell" asp-action="Index" asp-route-sortOrder="@ViewData["FulfilledSortParm"]">Исполнен</a> @*LOCALIZE*@
+            <p class="cell"></p> @*LOCALIZE*@
+        </div>
         @foreach (Order order in Model)
         {
             <a class="row" asp-action="Details" asp-route-id="@order.OrderID">

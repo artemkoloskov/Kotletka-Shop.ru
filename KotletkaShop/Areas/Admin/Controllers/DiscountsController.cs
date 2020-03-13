@@ -21,11 +21,24 @@ namespace KotletkaShop.Controllers
             _context = context;
         }
         // GET: /<controller>/
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder)
         {
-            List<Models.Discount> discounts = await _context.Discounts.AsNoTracking().ToListAsync();
+            ViewData["HandleSortParm"] = String.IsNullOrEmpty(sortOrder) ? "handle_desc" : "";
 
-            return View(discounts);
+            IQueryable<Discount> discounts = from s in _context.Discounts
+                                                 select s;
+
+            switch (sortOrder)
+            {
+                case "handle_desc":
+                    discounts = discounts.OrderByDescending(s => s.Handle);
+                    break;
+                default:
+                    discounts = discounts.OrderBy(s => s.Handle);
+                    break;
+            }
+
+            return View(await discounts.AsNoTracking().ToListAsync());
         }
 
         public async Task<IActionResult> Details(int? id)
@@ -75,7 +88,7 @@ namespace KotletkaShop.Controllers
 
             foreach (int id in ids)
             {
-                customers.Add(await _context.Customers.Where(c => c.CustomerID == id).SingleOrDefaultAsync());
+                customers.Add(await _context.Customers.Include(c => c.Image).Where(c => c.CustomerID == id).SingleOrDefaultAsync());
             }
 
             return customers;

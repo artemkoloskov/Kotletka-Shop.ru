@@ -11,12 +11,20 @@
 
 <div class="admin-card">
     <div class="table">
+        <div class="row">
+            <p class="cell"></p>
+            <a class="cell" asp-action="Index" asp-route-sortOrder="@ViewData["TitleSortParm"]">Название</a> @*LOCALIZE*@
+            <a class="cell" asp-action="Index" asp-route-sortOrder="@ViewData["QuantitySortParm"]">Количество</a> @*LOCALIZE*@
+            <a class="cell" asp-action="Index" asp-route-sortOrder="@ViewData["TypeSortParm"]">Тип</a> @*LOCALIZE*@
+            <a class="cell" asp-action="Index" asp-route-sortOrder="@ViewData["VendorSortParm"]">Производитель</a> @*LOCALIZE*@
+            <p class="cell"></p> @*LOCALIZE*@
+        </div>
         @foreach (Product product in Model)
         {
             <a class="row" asp-action="Details" asp-route-id="@product.ProductID">
                 <div class="cell">
                     <img src="@product.DefaultProductImage.Image.Path" alt="@product.DefaultProductImage.Image.AltText" class="admin-thumbnail" />
-                        
+
                 </div>
                 <div class="cell">
                     @Html.DisplayFor(modelItem => product.Title)
@@ -28,7 +36,7 @@
                     }
                     else
                     {
-                        <p>Не отслеживается</p>  @*Localize*@
+                        <p>Не отслеживается</p> @*Localize*@
                     }
                 </div>
                 <div class="cell">

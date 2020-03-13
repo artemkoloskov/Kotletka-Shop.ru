@@ -22,16 +22,29 @@ namespace KotletkaShop.Controllers
         }
 
         // GET: /<controller>/
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder)
         {
-            List<Models.Customer> customers = await _context.Customers
-                .Include(c => c.Orders)
-                .Include(c => c.Payments)
-                .Include(c => c.Image)
-                .AsNoTracking()
-                .ToListAsync();
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
 
-            return View(customers);
+            IQueryable<Customer> customers = from s in _context.Customers
+                                                 select s;
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    customers = customers.OrderByDescending(s => s.LastName);
+                    break;
+                default:
+                    customers = customers.OrderBy(s => s.LastName);
+                    break;
+            }
+
+            return View(await customers
+                        .Include(c => c.Orders)
+                        .Include(c => c.Payments)
+                        .Include(c => c.Image)
+                        .AsNoTracking()
+                        .ToListAsync());
         }
 
         public async Task<IActionResult> Details(int? id)

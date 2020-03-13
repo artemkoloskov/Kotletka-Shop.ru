@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using KotletkaShop.Data;
 using KotletkaShop.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -24,17 +25,51 @@ namespace KotletkaShop.Controllers
         /// <summary>
         /// Иницализация главного представления списка товаров для админки.
         /// </summary>
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder)
         {
+            ViewData["TitleSortParm"] = String.IsNullOrEmpty(sortOrder) ? "title_desc" : "";
+            ViewData["QuantitySortParm"] = sortOrder == "Quantity" ? "quantity_desc" : "Quantity";
+            ViewData["TypeSortParm"] = sortOrder == "Type" ? "type_desc" : "Type";
+            ViewData["VendorSortParm"] = sortOrder == "Vendor" ? "vendor_desc" : "Vendor";
+
+            IQueryable<Product> products = from s in _context.Products
+                                             select s;
+
+            switch (sortOrder)
+            {
+                case "title_desc":
+                    products = products.OrderByDescending(s => s.Title);
+                    break;
+                case "Quantity":
+                    products = products.OrderBy(s => s.Quantity);
+                    break;
+                case "quantity_desc":
+                    products = products.OrderByDescending(s => s.Quantity);
+                    break;
+                case "Type":
+                    products = products.OrderBy(s => s.ProductType);
+                    break;
+                case "type_desc":
+                    products = products.OrderByDescending(s => s.ProductType);
+                    break;
+                case "Vendor":
+                    products = products.OrderBy(s => s.Vendor);
+                    break;
+                case "vendor_desc":
+                    products = products.OrderByDescending(s => s.Vendor);
+                    break;
+                default:
+                    products = products.OrderBy(s => s.Title);
+                    break;
+            }
+
             // загрузка из контекста списка товаров.
-            List<Product> products = await _context.Products
+            return View(await products
                 .Include(p => p.ProductType)
                 .Include(p => p.ProductImages)
                     .ThenInclude(pi => pi.Image)
                 .AsNoTracking()
-                .ToListAsync();
-
-            return View(products);
+                .ToListAsync());
         }
 
         /// <summary>
