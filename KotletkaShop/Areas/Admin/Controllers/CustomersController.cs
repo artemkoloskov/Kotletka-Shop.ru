@@ -22,12 +22,47 @@ namespace KotletkaShop.Controllers
         }
 
         // GET: /<controller>/
-        public async Task<IActionResult> Index(string sortOrder)
+        public async Task<IActionResult> Index(string sortOrder, string searchString)
         {
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["CurrentFilter"] = searchString;
 
             IQueryable<Customer> customers = from s in _context.Customers
                                                  select s;
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+
+                customers = int.TryParse(searchString, out int searchNumber)
+                    ? customers.Where(c => c.FirstName.Contains(searchString)
+                                                   || c.LastName.Contains(searchString)
+                                                   || c.MiddleName.Contains(searchString)
+                                                   || c.City.Contains(searchString)
+                                                   || c.Country.Contains(searchString)
+                                                   || c.District.Contains(searchString)
+                                                   || c.Email.Contains(searchString)
+                                                   || c.Note.Contains(searchString)
+                                                   || c.PhoneNumber.Contains(searchString)
+                                                   || c.Province.Contains(searchString)
+                                                   || c.Street.Contains(searchString)
+                                                   || c.Tags.Contains(searchString)
+                                                   || c.ZipCode == searchNumber
+                                                )
+                    : customers.Where(c => c.FirstName.Contains(searchString)
+                                                   || c.LastName.Contains(searchString)
+                                                   || c.MiddleName.Contains(searchString)
+                                                   || c.City.Contains(searchString)
+                                                   || c.Country.Contains(searchString)
+                                                   || c.District.Contains(searchString)
+                                                   || c.Email.Contains(searchString)
+                                                   || c.Note.Contains(searchString)
+                                                   || c.PhoneNumber.Contains(searchString)
+                                                   || c.Province.Contains(searchString)
+                                                   || c.Street.Contains(searchString)
+                                                   || c.Tags.Contains(searchString)
+                                                );
+
+            }
 
             switch (sortOrder)
             {

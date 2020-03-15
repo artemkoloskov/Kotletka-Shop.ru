@@ -9,6 +9,16 @@
     <a asp-action="Create">Создать новый заказ</a> @*Localize*@
 </p>
 
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Поиск: <input type="text" name="SearchString" value="@ViewData["currentFilter"]" /> @*LOCALIZE*@
+            <input type="submit" value="Search" class="btn btn-default" /> |
+            <a asp-action="Index">Назад ко всему списку</a> @*LOCALIZE*@
+        </p>
+    </div>
+</form>
+
 <div class="admin-card">
     <div class="table">
         <div class="row">

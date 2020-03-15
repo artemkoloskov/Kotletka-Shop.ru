@@ -21,22 +21,31 @@ namespace KotletkaShop.Controllers
             _context = context;
         }
         // GET: /<controller>/
-        public async Task<IActionResult> Index(string sortOrder)
+        public async Task<IActionResult> Index(string sortOrder, string searchString)
         {
             ViewData["HandleSortParm"] = String.IsNullOrEmpty(sortOrder) ? "handle_desc" : "";
+            ViewData["CurrentFilter"] = searchString;
 
             IQueryable<Discount> discounts = from s in _context.Discounts
                                                  select s;
 
-            switch (sortOrder)
+            if (!string.IsNullOrEmpty(searchString))
             {
-                case "handle_desc":
-                    discounts = discounts.OrderByDescending(s => s.Handle);
-                    break;
-                default:
-                    discounts = discounts.OrderBy(s => s.Handle);
-                    break;
+
+                discounts = int.TryParse(searchString, out int searchNumber)
+                    ? discounts.Where(d => d.Handle.Contains(searchString)
+                                        || d.Value == searchNumber
+                                        || d.DiscountID == searchNumber
+                                        || d.MinimumRequirementValue == searchNumber
+                                    )
+                    : discounts.Where(d => d.Handle.Contains(searchString));
             }
+
+            discounts = sortOrder switch
+            {
+                "handle_desc" => discounts.OrderByDescending(s => s.Handle),
+                _ => discounts.OrderBy(s => s.Handle),
+            };
 
             return View(await discounts.AsNoTracking().ToListAsync());
         }

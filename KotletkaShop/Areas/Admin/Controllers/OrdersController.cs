@@ -25,50 +25,68 @@ namespace KotletkaShop.Controllers
         /// <summary>
         /// Иницализация главного представления списка заказов для админки.
         /// </summary>
-        public async Task<IActionResult> Index(string sortOrder)
+        public async Task<IActionResult> Index(string sortOrder, string searchString)
         {
             ViewData["IdSortParm"] = String.IsNullOrEmpty(sortOrder) ? "id_desc" : "";
             ViewData["NameSortParm"] = sortOrder == "Name" ? "name_desc" : "Name";
             ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
             ViewData["PaidSortParm"] = sortOrder == "Paid" ? "paid_desc" : "Paid";
             ViewData["FulfilledSortParm"] = sortOrder == "Fulfilled" ? "fulfilled_desc" : "Fulfilled";
+            ViewData["CurrentFilter"] = searchString;
 
             IQueryable<Order> orders = from s in _context.Orders
                            select s;
 
-            switch (sortOrder)
+            if (!string.IsNullOrEmpty(searchString))
             {
-                case "id_desc":
-                    orders = orders.OrderByDescending(s => s.OrderID);
-                    break;
-                case "Date":
-                    orders = orders.OrderBy(s => s.DateCreated);
-                    break;
-                case "date_desc":
-                    orders = orders.OrderByDescending(s => s.DateCreated);
-                    break;
-                case "Name":
-                    orders = orders.OrderBy(s => s.Customer.LastName);
-                    break;
-                case "name_desc":
-                    orders = orders.OrderByDescending(s => s.Customer.LastName);
-                    break;
-                case "Paid":
-                    orders = orders.OrderBy(s => s.DateCreated);
-                    break;
-                case "paid_desc":
-                    orders = orders.OrderByDescending(s => s.DateCreated);
-                    break;
-                case "Fulfilled":
-                    orders = orders.OrderBy(s => s.DateCreated);
-                    break;
-                case "fulfilled_desc":
-                    orders = orders.OrderByDescending(s => s.DateCreated);
-                    break;
-                default:
-                    orders = orders.OrderBy(s => s.Customer.LastName);
-                    break;
+
+                orders = int.TryParse(searchString, out int searchNumber)
+                    ? orders.Where(o => o.CustomerID == searchNumber
+                                    || o.OrderID == searchNumber
+                                    || o.Customer.Apartment.Contains(searchString)
+                                    || o.Customer.FirstName.Contains(searchString)
+                                    || o.Customer.LastName.Contains(searchString)
+                                    || o.Customer.MiddleName.Contains(searchString)
+                                    || o.Customer.City.Contains(searchString)
+                                    || o.Customer.Country.Contains(searchString)
+                                    || o.Customer.District.Contains(searchString)
+                                    || o.Customer.Email.Contains(searchString)
+                                    || o.Customer.Note.Contains(searchString)
+                                    || o.Customer.PhoneNumber.Contains(searchString)
+                                    || o.Customer.Province.Contains(searchString)
+                                    || o.Customer.Street.Contains(searchString)
+                                    || o.Customer.Tags.Contains(searchString)
+                                )
+                    : orders.Where(o => o.Note.Contains(searchString)
+                                    || o.Customer.Apartment.Contains(searchString)
+                                    || o.Customer.FirstName.Contains(searchString)
+                                    || o.Customer.LastName.Contains(searchString)
+                                    || o.Customer.MiddleName.Contains(searchString)
+                                    || o.Customer.City.Contains(searchString)
+                                    || o.Customer.Country.Contains(searchString)
+                                    || o.Customer.District.Contains(searchString)
+                                    || o.Customer.Email.Contains(searchString)
+                                    || o.Customer.Note.Contains(searchString)
+                                    || o.Customer.PhoneNumber.Contains(searchString)
+                                    || o.Customer.Province.Contains(searchString)
+                                    || o.Customer.Street.Contains(searchString)
+                                    || o.Customer.Tags.Contains(searchString)
+                                );
             }
+
+            orders = sortOrder switch
+            {
+                "id_desc" => orders.OrderByDescending(s => s.OrderID),
+                "Date" => orders.OrderBy(s => s.DateCreated),
+                "date_desc" => orders.OrderByDescending(s => s.DateCreated),
+                "Name" => orders.OrderBy(s => s.Customer.LastName),
+                "name_desc" => orders.OrderByDescending(s => s.Customer.LastName),
+                "Paid" => orders.OrderBy(s => s.DateCreated),
+                "paid_desc" => orders.OrderByDescending(s => s.DateCreated),
+                "Fulfilled" => orders.OrderBy(s => s.DateCreated),
+                "fulfilled_desc" => orders.OrderByDescending(s => s.DateCreated),
+                _ => orders.OrderBy(s => s.Customer.LastName),
+            };
 
             // загрузка из контекста списка закозов. НЕ ЧЕРНОВИКИ
             return View(await orders.

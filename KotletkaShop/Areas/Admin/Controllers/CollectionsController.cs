@@ -23,22 +23,31 @@ namespace KotletkaShop.Controllers
         /// Инициализация главного пердставления списка коллекций товаров
         /// </summary>
         /// <returns>The index.</returns>
-        public async Task<IActionResult> Index(string sortOrder)
+        public async Task<IActionResult> Index(string sortOrder, string searchString)
         {
             ViewData["TitleSortParm"] = String.IsNullOrEmpty(sortOrder) ? "title_desc" : "";
+            ViewData["CurrentFilter"] = searchString;
 
             IQueryable<Collection> collections = from s in _context.Collections
                            select s;
 
-            switch (sortOrder)
+            if (!string.IsNullOrEmpty(searchString))
             {
-                case "title_desc":
-                    collections = collections.OrderByDescending(s => s.Title);
-                    break;
-                default:
-                    collections = collections.OrderBy(s => s.Title);
-                    break;
+                collections = int.TryParse(searchString, out int searchNumber)
+                    ? collections.Where(c => c.Title.Contains(searchString)
+                                       || c.Handle.Contains(searchString)
+                                       || c.CollectionID == searchNumber
+                                       )
+                    : collections.Where(c => c.Title.Contains(searchString)
+                                       || c.Handle.Contains(searchString)
+                                       );
             }
+
+            collections = sortOrder switch
+            {
+                "title_desc" => collections.OrderByDescending(s => s.Title),
+                _ => collections.OrderBy(s => s.Title),
+            };
 
             return View(await collections
                 .Include(c => c.Image)
