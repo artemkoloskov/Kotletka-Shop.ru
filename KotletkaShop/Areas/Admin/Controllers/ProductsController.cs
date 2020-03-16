@@ -25,15 +25,42 @@ namespace KotletkaShop.Controllers
         /// <summary>
         /// Иницализация главного представления списка товаров для админки.
         /// </summary>
-        public async Task<IActionResult> Index(string sortOrder)
+        public async Task<IActionResult> Index(string sortOrder, string searchString)
         {
             ViewData["TitleSortParm"] = String.IsNullOrEmpty(sortOrder) ? "title_desc" : "";
             ViewData["QuantitySortParm"] = sortOrder == "Quantity" ? "quantity_desc" : "Quantity";
             ViewData["TypeSortParm"] = sortOrder == "Type" ? "type_desc" : "Type";
             ViewData["VendorSortParm"] = sortOrder == "Vendor" ? "vendor_desc" : "Vendor";
+            ViewData["CurrentFilter"] = searchString;
 
             IQueryable<Product> products = from s in _context.Products
                                              select s;
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                products = int.TryParse(searchString, out int searchNumber)
+                    ? products.Where(p => p.Title.Contains(searchString)
+                                       || p.Handle.Contains(searchString)
+                                       || p.Body.Contains(searchString)
+                                       || p.Option1Name.Contains(searchString)
+                                       || p.Option2Name.Contains(searchString)
+                                       || p.Option3Name.Contains(searchString)
+                                       || p.Tags.Contains(searchString)
+                                       || p.Vendor.Contains(searchString)
+                                       || p.Price == searchNumber
+                                       || p.Quantity == searchNumber
+                                       || p.Weight == searchNumber
+                                       )
+                    : products.Where(p => p.Title.Contains(searchString)
+                                       || p.Handle.Contains(searchString)
+                                       || p.Body.Contains(searchString)
+                                       || p.Option1Name.Contains(searchString)
+                                       || p.Option2Name.Contains(searchString)
+                                       || p.Option3Name.Contains(searchString)
+                                       || p.Tags.Contains(searchString)
+                                       || p.Vendor.Contains(searchString)
+                                       );
+            }
 
             switch (sortOrder)
             {

@@ -5,8 +5,23 @@
 
 <h2>Все коллекции</h2> @*LOCALIZE*@
 
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Поиск: <input type="text" name="SearchString" value="@ViewData["currentFilter"]" /> @*LOCALIZE*@
+            <input type="submit" value="Search" class="btn btn-default" /> |
+            <a asp-action="Index">Назад ко всему списку</a> @*LOCALIZE*@
+        </p>
+    </div>
+</form>
+
 <div class="grid">
     <div class="table">
+        <div class="row">
+            <p class="cell"></p>
+            <a class="cell" asp-action="Index" asp-route-sortOrder="@ViewData["TitleSortParm"]">Название</a> @*LOCALIZE*@
+        </div>
+
         @foreach (Collection collection in Model)
         {
             if (collection.Published)

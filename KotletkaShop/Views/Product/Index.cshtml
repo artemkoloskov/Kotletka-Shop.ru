@@ -5,8 +5,24 @@
 
 <h2>Товары</h2> @*LOCALIZE*@
 
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Поиск: <input type="text" name="SearchString" value="@ViewData["currentFilter"]" /> @*LOCALIZE*@
+            <input type="submit" value="Search" class="btn btn-default" /> |
+            <a asp-action="Index">Назад ко всему списку</a> @*LOCALIZE*@
+        </p>
+    </div>
+</form>
+
 <div class="admin-card">
     <div class="table">
+        <div class="row">
+            <a class="cell" asp-action="Index" asp-route-sortOrder="@ViewData["TitleSortParm"]">Название</a> @*LOCALIZE*@
+            <a class="cell" asp-action="Index" asp-route-sortOrder="@ViewData["QuantitySortParm"]">Количество</a> @*LOCALIZE*@
+            <a class="cell" asp-action="Index" asp-route-sortOrder="@ViewData["TypeSortParm"]">Тип</a> @*LOCALIZE*@
+            <a class="cell" asp-action="Index" asp-route-sortOrder="@ViewData["VendorSortParm"]">Производитель</a> @*LOCALIZE*@
+        </div>
         @foreach (Product product in Model)
         {
             if (product.Published)
@@ -15,11 +31,11 @@
                 || product.VisibleFrom == DateTime.Parse("0001-01-01") && product.VisibleUntil == DateTime.Parse("0001-01-01")
                 || DateTime.Now >= product.VisibleFrom && product.VisibleUntil == DateTime.Parse("0001-01-01"))
                 {
-                <a class="row" asp-controller="Product" asp-action="Product" asp-route-id="@product.ProductID">
-                    <img src="@product.DefaultProductImage.Image.Path" alt="@product.DefaultProductImage.Image.AltText" class="admin-thumbnail" />
-                    <p>@product.Title</p>
-                    <p>@product.Price р.</p> @*LOCALIZE*@
-                </a>
+                    <a class="row" asp-controller="Product" asp-action="Product" asp-route-id="@product.ProductID">
+                        <img src="@product.DefaultProductImage.Image.Path" alt="@product.DefaultProductImage.Image.AltText" class="admin-thumbnail" />
+                        <p>@product.Title</p>
+                        <p>@product.Price р.</p> @*LOCALIZE*@
+                    </a>
                 }
             }
         }
