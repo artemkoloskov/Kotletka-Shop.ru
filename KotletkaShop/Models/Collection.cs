@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using KotletkaShop.Data;
 using Microsoft.EntityFrameworkCore;
@@ -126,24 +125,28 @@ namespace KotletkaShop.Models
                 case CollectionCompareSubjects.ProductType:
                     translatedString = "Тип товара"; // LOCALIZE 
                     return translatedString;
-                case CollectionCompareSubjects.ProductTag:
+                case ProductTag:
                     translatedString = "Тэг товара"; // LOCALIZE
                     return translatedString;
-                case CollectionCompareSubjects.ProductPrice:
+                case ProductPrice:
                     translatedString = "Стоимость товара"; // LOCALIZE
                     return translatedString;
-                case CollectionCompareSubjects.ProductWeight:
+                case ProductWeight:
                     translatedString = "Вес товара"; // LOCALIZE
                     return translatedString;
-                case CollectionCompareSubjects.ProductVendor:
+                case ProductVendor:
                     translatedString = "Производитель товара"; // LOCALIZE
                     return translatedString;
-                case CollectionCompareSubjects.ProductTitle:
+                case ProductTitle:
                     translatedString = "Название товара"; // LOCALIZE
                     return translatedString;
-                case CollectionCompareSubjects.ProductAmountLeft:
+                case ProductAmountLeft:
                     translatedString = "Количество товара на складе"; // LOCALIZE
                     return translatedString;
+                case NoSubject:
+                    break;
+                default:
+                    break;
             }
 
             return translatedString;
@@ -160,30 +163,34 @@ namespace KotletkaShop.Models
 
             switch (condition)
             {
-                case CollectionConditions.Contains:
+                case Contains:
                     translatedString = "содержит"; // LOCALIZE
                     return translatedString;
-                case CollectionConditions.IsEqualTo:
+                case IsEqualTo:
                     translatedString = "равно"; // LOCALIZE
                     return translatedString;
-                case CollectionConditions.IsNotEqualTo:
+                case IsNotEqualTo:
                     translatedString = "не равно"; // LOCALIZE
                     return translatedString;
-                case CollectionConditions.IsGreaterThan:
+                case IsGreaterThan:
                     translatedString = "больше, чем"; // LOCALIZE
                     return translatedString;
-                case CollectionConditions.IsLessThen:
+                case IsLessThen:
                     translatedString = "меньше, чем"; // LOCALIZE
                     return translatedString;
-                case CollectionConditions.StartsWith:
+                case StartsWith:
                     translatedString = "начинается с"; // LOCALIZE
                     return translatedString;
-                case CollectionConditions.EndsWith:
+                case EndsWith:
                     translatedString = "заканчивается на"; // LOCALIZE
                     return translatedString;
-                case CollectionConditions.DoesNotContain:
+                case DoesNotContain:
                     translatedString = "не содержит"; // LOCALIZE
                     return translatedString;
+                case NoCondition:
+                    break;
+                default:
+                    break;
             }
 
             return translatedString;

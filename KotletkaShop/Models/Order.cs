@@ -97,6 +97,8 @@ namespace KotletkaShop.Models
                                             break;
                                         case BuyXGetY:
                                             break; // TODO добавить этот случай
+                                        default:
+                                            break;
                                     }
                                 }
                                 else if (d.Discount.AppliesTo == SpecificProducts)
@@ -121,6 +123,8 @@ namespace KotletkaShop.Models
                                                     discountAmount += p.Product.Price * p.Quantity * d.Discount.Value;
                                                     break;
                                                 case BuyXGetY: // TODO добавить этот случай
+                                                    break;
+                                                default:
                                                     break;
                                             }
                                         }

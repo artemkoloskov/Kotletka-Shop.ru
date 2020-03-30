@@ -280,7 +280,7 @@ namespace KotletkaShop.Controllers
             }
             catch (DbUpdateException)
             {
-                return RedirectToAction(nameof(Delete), new { id = id, saveChangesError = true });
+                return RedirectToAction(nameof(Delete), (id, saveChangesError: true));
             }
         }
     }

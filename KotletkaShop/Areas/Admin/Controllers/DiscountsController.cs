@@ -7,8 +7,6 @@ using KotletkaShop.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace KotletkaShop.Controllers
 {
     [Area("Admin")]
@@ -20,15 +18,25 @@ namespace KotletkaShop.Controllers
         {
             _context = context;
         }
+
         // GET: /<controller>/
+        /// <summary>
+        /// Инициализация представления списка скидок
+        /// </summary>
+        /// <param name="sortOrder">Параметр сортировки</param>
+        /// <param name="searchString">Параметр поиска по списку</param>
+        /// <returns></returns>
         public async Task<IActionResult> Index(string sortOrder, string searchString)
         {
             ViewData["HandleSortParm"] = String.IsNullOrEmpty(sortOrder) ? "handle_desc" : "";
             ViewData["CurrentFilter"] = searchString;
 
             IQueryable<Discount> discounts = from s in _context.Discounts
-                                                 select s;
+                                             select s;
 
+            // Если строка поиска не пустая - пробуем считать из строки целое число
+            // и выполняем поиск по нему, или, если число не удалось счтать,
+            // ищем по самой строке
             if (!string.IsNullOrEmpty(searchString))
             {
 
@@ -271,7 +279,7 @@ namespace KotletkaShop.Controllers
             }
             catch (DbUpdateException)
             {
-                return RedirectToAction(nameof(Delete), new { id = id, saveChangesError = true });
+                return RedirectToAction(nameof(Delete), (id, saveChangesError: true));
             }
         }
     }

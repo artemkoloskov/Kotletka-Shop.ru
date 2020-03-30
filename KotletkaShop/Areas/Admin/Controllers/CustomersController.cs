@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using KotletkaShop.Data;
 using KotletkaShop.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace KotletkaShop.Controllers
 {
@@ -22,14 +19,25 @@ namespace KotletkaShop.Controllers
         }
 
         // GET: /<controller>/
+        /// <summary>
+        /// Инициализация представления списка клиентов
+        /// </summary>
+        /// <param name="sortOrder">Параметр сортировки</param>
+        /// <param name="searchString">Параметр поиска</param>
+        /// <returns></returns>
         public async Task<IActionResult> Index(string sortOrder, string searchString)
         {
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["CurrentFilter"] = searchString;
 
             IQueryable<Customer> customers = from s in _context.Customers
-                                                 select s;
+                                             select s;
 
+            // Если строка поиска не пустая - пробуем считать из строки целое число
+            // и выполняем поиск по нему, или, если число не удалось счтать,
+            // ищем по самой строке
+            // Поиск осушествляется по имени, фамилии, адресу, имейлу, заметкам,
+            // номеру телефона, тэгам, индексу,
             if (!string.IsNullOrEmpty(searchString))
             {
 
@@ -82,6 +90,11 @@ namespace KotletkaShop.Controllers
                         .ToListAsync());
         }
 
+        /// <summary>
+        /// Инициализация представления деталей конкретного клиента
+        /// </summary>
+        /// <param name="id">Идентификатор клиента</param>
+        /// <returns></returns>
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -89,6 +102,8 @@ namespace KotletkaShop.Controllers
                 return NotFound();
             }
 
+            // Загрузка из БД сущности клиента, вместе с его заказами, платежами
+            // и фото профиля
             Customer customer = await _context.Customers
                 .Include(c => c.Orders)
                 .Include(c => c.Payments)
@@ -99,13 +114,21 @@ namespace KotletkaShop.Controllers
             return customer == null ? NotFound() : (IActionResult)View(customer);
         }
 
-        // GET: Customers/Create
+        // GET: Admin/Customers/Create
+        /// <summary>
+        /// Инициализация представления создания нового клиента.
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Customers/Create
+        // POST: Admin/Customers/Create
+        /// <summary>
+        /// Инициализация представления создания нового клиента.
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
@@ -134,6 +157,11 @@ namespace KotletkaShop.Controllers
         }
 
         // GET: Admin/Customers/Edit/5
+        /// <summary>
+        /// Инициализация представления редактирования клиента
+        /// </summary>
+        /// <param name="id">Идентификатор редактируемого клиента</param>
+        /// <returns></returns>
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -150,6 +178,11 @@ namespace KotletkaShop.Controllers
         }
 
         // POST: Admin/Customers/Edit/5
+        /// <summary>
+        /// Инициализация представления редактирования клиента
+        /// </summary>
+        /// <param name="id">Идентификатор редактируемого клиента</param>
+        /// <returns></returns>
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditPost(int? id)
@@ -186,7 +219,13 @@ namespace KotletkaShop.Controllers
             return View(customerToUpdate);
         }
 
-        // GET: Customers/Delete/5
+        // GET: Admin/Customers/Delete/5
+        /// <summary>
+        /// Инициализация представления удаления клиента
+        /// </summary>
+        /// <param name="id">Идентификтор удаляемого клиента</param>
+        /// <param name="saveChangesError">Маркер ошибки удаления</param>
+        /// <returns></returns>
         public async Task<IActionResult> Delete(int? id, bool? saveChangesError = false)
         {
             if (id == null)
@@ -212,7 +251,7 @@ namespace KotletkaShop.Controllers
             return View(customer);
         }
 
-        // POST: Customers/Delete/5
+        // POST: Admin/Customers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -231,7 +270,7 @@ namespace KotletkaShop.Controllers
             }
             catch (DbUpdateException)
             {
-                return RedirectToAction(nameof(Delete), new { id = id, saveChangesError = true });
+                return RedirectToAction(nameof(Delete), (id, saveChangesError: true));
             }
         }
     }

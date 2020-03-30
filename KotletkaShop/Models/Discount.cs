@@ -118,6 +118,8 @@ namespace KotletkaShop.Models
                 case DiscountTypes.BuyXGetY:
                     text = "Купи X получи Y, "; // Localize
                     break;
+                default:
+                    break;
             }
 
             switch (AppliesTo)
@@ -131,6 +133,8 @@ namespace KotletkaShop.Models
                 case DiscountApplicableObjectTypes.SpecificCollections:
                     text += "на " + ApplyableObjectsIDs.Count() + " коллекций. "; //Localize
                     break;
+                default:
+                    break;
             }
 
             switch (MinimumRequirement)
@@ -142,6 +146,8 @@ namespace KotletkaShop.Models
                     break;
                 case DiscountMinimumRequirementTypes.MinimumQuantity:
                     text += "Действует при количестве товаров в заказе от " + MinimumRequirementValue + " шт. "; //Localize
+                    break;
+                default:
                     break;
             }
 
@@ -155,6 +161,8 @@ namespace KotletkaShop.Models
                     break;
                 case DiscountEligibleObjectTypes.SpecificGroupsOfCustomers:
                     text += "Действует для " + EligibleObjectsIDs.Count + " групп пользователей."; //Localize
+                    break;
+                default:
                     break;
             }
 
@@ -173,6 +181,8 @@ namespace KotletkaShop.Models
                     return "Бесплатная доставка"; //Localize
                 case DiscountTypes.BuyXGetY:
                     return "Купи X получи Y"; //Localize
+                default:
+                    break;
             }
 
             return "";
@@ -188,6 +198,8 @@ namespace KotletkaShop.Models
                     return "Определенные товары"; //Localize
                 case DiscountApplicableObjectTypes.SpecificCollections:
                     return "Определенные коллекции"; //Localize
+                default:
+                    break;
             }
 
             return "";
@@ -203,6 +215,8 @@ namespace KotletkaShop.Models
                     return "Сумма заказа"; //Localize
                 case DiscountMinimumRequirementTypes.MinimumQuantity:
                     return "Количество товаров в заказе"; //Localize
+                default:
+                    break;
             }
 
             return "";
@@ -218,6 +232,8 @@ namespace KotletkaShop.Models
                     return "Для определенных пользователей"; //Localize
                 case DiscountEligibleObjectTypes.SpecificGroupsOfCustomers:
                     return "Для определенных групп пользователей"; //Localize
+                default:
+                    break;
             }
 
             return "";

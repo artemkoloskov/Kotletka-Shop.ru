@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Linq;
 using KotletkaShop.Data;
 using KotletkaShop.Models;
@@ -22,13 +21,22 @@ namespace KotletkaShop.Controllers
         /// <summary>
         /// Инициализация главного пердставления списка коллекций товаров
         /// </summary>
+        /// <param name="sortOrder">Параметр сортировки</param>
+        /// <param name="searchString">Параметр поиска</param>
+        /// <param name="currentFilter">Параметр фильтрации</param>
+        /// <param name="pageNumber">Номер страницы списка</param>
         /// <returns>The index.</returns>
-        public async Task<IActionResult> Index(string sortOrder, string searchString, int? pageNumber, string currentFilter)
+        public async Task<IActionResult> Index(
+            string sortOrder,
+            string searchString,
+            string currentFilter,
+            int? pageNumber)
         {
             ViewData["CurrentSort"] = sortOrder;
             ViewData["TitleSortParm"] = string.IsNullOrEmpty(sortOrder) ? "title_desc" : "";
             ViewData["CurrentFilter"] = searchString;
 
+            // Если нет строки для поиска - открываем список с первой страницы
             if (searchString != null)
             {
                 pageNumber = 1;
@@ -41,8 +49,12 @@ namespace KotletkaShop.Controllers
             ViewData["CurrentFilter"] = searchString;
 
             IQueryable<Collection> collections = from s in _context.Collections
-                           select s;
-
+                                                 select s;
+            // Если строка поиска не пустая - пробуем считать из строки целое число
+            // и выполняем поиск по нему, или, если число не удалось счтать,
+            // ищем по самой строке
+            // Поиск осуществляется по Заголовку, короткому названию и идентификатору
+            // коллекции
             if (!string.IsNullOrEmpty(searchString))
             {
                 collections = int.TryParse(searchString, out int searchNumber)
@@ -69,7 +81,7 @@ namespace KotletkaShop.Controllers
         /// <summary>
         /// Инициализация представления деталей конкретной коллекции
         /// </summary>
-        /// <param name="id">Идентификатор заказа</param>
+        /// <param name="id">Идентификатор коллекции</param>
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -92,13 +104,21 @@ namespace KotletkaShop.Controllers
             return View(collection);
         }
 
-        // GET: Collections/Create
+        // GET: Admin/Collections/Create
+        /// <summary>
+        /// Инициализация представления создания новой коллекции
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Collections/Create
+        // POST: Admin/Collections/Create
+        /// <summary>
+        /// Инициализация представления создания новой коллекции
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
@@ -127,6 +147,11 @@ namespace KotletkaShop.Controllers
         }
 
         // GET: Admin/Collections/Edit/5
+        /// <summary>
+        /// Инициализация представления редактирования коллекции
+        /// </summary>
+        /// <param name="id">Идентификатор коллекции</param>
+        /// <returns></returns>
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -178,6 +203,12 @@ namespace KotletkaShop.Controllers
         }
 
         // GET: Collections/Delete/5
+        /// <summary>
+        /// Инициализация представления удаления коллекции
+        /// </summary>
+        /// <param name="id">Идентификатор коллекции</param>
+        /// <param name="saveChangesError">Маркер ошибки удаления</param>
+        /// <returns></returns>
         public async Task<IActionResult> Delete(int? id, bool? saveChangesError = false)
         {
             if (id == null)
@@ -222,7 +253,7 @@ namespace KotletkaShop.Controllers
             }
             catch (DbUpdateException)
             {
-                return RedirectToAction(nameof(Delete), new { id = id, saveChangesError = true });
+                return RedirectToAction(nameof(Delete), (id, saveChangesError: true));
             }
         }
     }
