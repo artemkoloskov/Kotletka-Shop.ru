@@ -1,13 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using KotletkaShop.Data;
 using KotletkaShop.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
-
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace KotletkaShop.Controllers
 {
@@ -25,6 +22,9 @@ namespace KotletkaShop.Controllers
         /// <summary>
         /// Иницализация главного представления списка заказов для админки.
         /// </summary>
+        /// <param name="sortOrder">Параметр сортировки</param>
+        /// <param name="searchString">Параметр поиска</param>
+        /// <returns></returns>
         public async Task<IActionResult> Index(string sortOrder, string searchString)
         {
             ViewData["IdSortParm"] = String.IsNullOrEmpty(sortOrder) ? "id_desc" : "";
@@ -37,6 +37,12 @@ namespace KotletkaShop.Controllers
             IQueryable<Order> orders = from s in _context.Orders
                            select s;
 
+            // Если строка поиска не пустая - пробуем считать из строки целое число
+            // и выполняем поиск по нему, или, если число не удалось счтать,
+            // ищем по самой строке
+            // Поиск осуществляется по идентификтору клиента, идентификтаору заказа,
+            // адресу клиента, имени клиента, фамилии клиента, отчеству клиента,
+            // имейлу, заметкам по клиенту, номеру телефона, тэгам клиента
             if (!string.IsNullOrEmpty(searchString))
             {
 
@@ -74,6 +80,7 @@ namespace KotletkaShop.Controllers
                                 );
             }
 
+            // Перебор сортировки на основе параметра поиска.
             orders = sortOrder switch
             {
                 "id_desc" => orders.OrderByDescending(s => s.OrderID),

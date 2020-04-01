@@ -5,6 +5,7 @@ namespace KotletkaShop.Models
 {
     public class Customer
     {
+        // Модель EF
         public int CustomerID { get; set; }
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
@@ -29,6 +30,10 @@ namespace KotletkaShop.Models
         public ICollection<Payment> Payments { get; set; }
         public Image Image { get; set; }
 
+        /// <summary>
+        /// Имя и Фамилия в читаемом формате. В случае если клиент не указал имя
+        /// или фамилию - возвращает его имейл
+        /// </summary>
         public string ScreenName
         {
             get
@@ -42,8 +47,14 @@ namespace KotletkaShop.Models
             }
         }
 
+        /// <summary>
+        /// Короткая версия адреса: Город, область, страна
+        /// </summary>
         public string ScreenAddressShort => City + ", " + Province + ", " + Country;
 
+        /// <summary>
+        /// Сумма выплат за покупки клиента
+        /// </summary>
         public double TotalSpent
         {
             get

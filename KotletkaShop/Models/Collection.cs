@@ -10,6 +10,8 @@ using static KotletkaShop.Models.CollectionConditions;
 
 namespace KotletkaShop.Models
 {
+    // Виды субъектов по которым будут сравниваться с объктом сравнения
+    // товары
     public enum CollectionCompareSubjects
     {
         NoSubject = 0,
@@ -22,6 +24,7 @@ namespace KotletkaShop.Models
         ProductAmountLeft
     }
 
+    // Виды условий, по которым будут сравниваться объект и субъект 
     public enum CollectionConditions
     {
         NoCondition = 0,
@@ -35,6 +38,7 @@ namespace KotletkaShop.Models
         DoesNotContain
     }
 
+    // Виды сортировки коллекции
     public enum SortingOrders
     {
         A_Z = 1,
@@ -46,6 +50,7 @@ namespace KotletkaShop.Models
 
     public class Collection
     {
+        // Модель EF
         public int CollectionID { get; set; }
         public string Handle { get; set; }
         public string Title { get; set; }
@@ -112,7 +117,7 @@ namespace KotletkaShop.Models
         }
 
         /// <summary>
-        /// Переводит значениям нумератора типов объектов для сравнения в читаемую форму
+        /// Переводит значения нумератора типов объектов для сравнения в читаемую форму
         /// </summary>
         /// <returns>Тип объекта для сравнения</returns>
         /// <param name="compareSubject">ип объекта для сравнения в читаемой форме</param>

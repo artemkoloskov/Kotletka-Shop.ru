@@ -3,6 +3,7 @@ namespace KotletkaShop.Models
 {
     public class ProductImage
     {
+        // Модель EF
         public int ID { get; set; }
         public int ProductID { get; set; }
         public int ImageID { get; set; }

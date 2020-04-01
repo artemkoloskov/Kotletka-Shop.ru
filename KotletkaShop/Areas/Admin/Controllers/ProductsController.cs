@@ -7,8 +7,6 @@ using KotletkaShop.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace KotletkaShop.Controllers
 {
     [Area("Admin")]
@@ -25,6 +23,9 @@ namespace KotletkaShop.Controllers
         /// <summary>
         /// Иницализация главного представления списка товаров для админки.
         /// </summary>
+        /// <param name="sortOrder">Параметр сортировки</param>
+        /// <param name="searchString">Параметр поиска</param>
+        /// <returns></returns>
         public async Task<IActionResult> Index(string sortOrder, string searchString)
         {
             ViewData["TitleSortParm"] = String.IsNullOrEmpty(sortOrder) ? "title_desc" : "";
@@ -62,6 +63,7 @@ namespace KotletkaShop.Controllers
                                        );
             }
 
+            // Перебор параметра сортировки
             switch (sortOrder)
             {
                 case "title_desc":
@@ -146,13 +148,22 @@ namespace KotletkaShop.Controllers
             return View(product);
         }
 
-        // GET: Products/Create
+        // GET: Admin/Products/Create
+        /// <summary>
+        /// Инициализация представления создания нового товара
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Products/Create
+        // POST: Admin/Products/Create
+        /// <summary>
+        /// Ининциализация представления создания нового товара
+        /// </summary>
+        /// <param name="product"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
@@ -181,6 +192,11 @@ namespace KotletkaShop.Controllers
         }
 
         // GET: Admin/Products/Edit/5
+        /// <summary>
+        /// Инициализация представления редактирования товара
+        /// </summary>
+        /// <param name="id">Идентификатор товара</param>
+        /// <returns></returns>
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -189,6 +205,7 @@ namespace KotletkaShop.Controllers
             }
 
             Product product = await _context.Products.FindAsync(id);
+
             if (product == null)
             {
                 return NotFound();
@@ -197,6 +214,11 @@ namespace KotletkaShop.Controllers
         }
 
         // POST: Admin/Products/Edit/5
+        /// <summary>
+        /// Инициализация представления редактирования товара
+        /// </summary>
+        /// <param name="id">Идентификатор товара</param>
+        /// <returns></returns>
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditPost(int? id)
@@ -236,6 +258,12 @@ namespace KotletkaShop.Controllers
         }
 
         // GET: Products/Delete/5
+        /// <summary>
+        /// Инициализация представления удаления товара
+        /// </summary>
+        /// <param name="id">Идентификатор товара</param>
+        /// <param name="saveChangesError"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Delete(int? id, bool? saveChangesError = false)
         {
             if (id == null)
@@ -262,11 +290,18 @@ namespace KotletkaShop.Controllers
         }
 
         // POST: Products/Delete/5
+        /// <summary>
+        /// Инициализация представления удаления товара
+        /// </summary>
+        /// <param name="id">Идентификатор товара</param>
+        /// <param name="saveChangesError"></param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             Product product = await _context.Products.FindAsync(id);
+
             if (product == null)
             {
                 return RedirectToAction(nameof(Index));

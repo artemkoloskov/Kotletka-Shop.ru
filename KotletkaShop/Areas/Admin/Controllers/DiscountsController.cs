@@ -37,6 +37,8 @@ namespace KotletkaShop.Controllers
             // Если строка поиска не пустая - пробуем считать из строки целое число
             // и выполняем поиск по нему, или, если число не удалось счтать,
             // ищем по самой строке
+            // Поиск осуществляется по названию, величине скидки, номеру идентивфикатора
+            // и минимальномк значению
             if (!string.IsNullOrEmpty(searchString))
             {
 
@@ -58,6 +60,11 @@ namespace KotletkaShop.Controllers
             return View(await discounts.AsNoTracking().ToListAsync());
         }
 
+        /// <summary>
+        /// Инициализация представления деталей конкретной скидки
+        /// </summary>
+        /// <param name="id">Идентификатор скидки</param>
+        /// <returns></returns>
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -145,13 +152,21 @@ namespace KotletkaShop.Controllers
             return products;
         }
 
-        // GET: Customers/Create
+        // GET: Admin/Customers/Create
+        /// <summary>
+        /// Инициализация представления создания новой скидки
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Collections/Create
+        // POST: Admin/Collections/Create
+        /// <summary>
+        /// Инициализация представления создания новой скидки
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
@@ -181,6 +196,11 @@ namespace KotletkaShop.Controllers
         }
 
         // GET: Admin/Discounts/Edit/5
+        /// <summary>
+        /// Инициализация представления редактирования конкретной скидки
+        /// </summary>
+        /// <param name="id">Идентификатор скидки</param>
+        /// <returns></returns>
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -197,6 +217,11 @@ namespace KotletkaShop.Controllers
         }
 
         // POST: Admin/Discounts/Edit/5
+        /// <summary>
+        /// Инициализация представления редактирования конкретной скидки
+        /// </summary>
+        /// <param name="id">Идентификатор скидки</param>
+        /// <returns></returns>
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditPost(int? id)
@@ -234,7 +259,13 @@ namespace KotletkaShop.Controllers
             return View(discountToUpdate);
         }
 
-        // GET: Discounts/Delete/5
+        // GET: Admin/Discounts/Delete/5
+        /// <summary>
+        /// инциализация представления удаления скидки 
+        /// </summary>
+        /// <param name="id">Идентификтор скидки</param>
+        /// <param name="saveChangesError">Маркер ошибки удаления</param>
+        /// <returns></returns>
         public async Task<IActionResult> Delete(int? id, bool? saveChangesError = false)
         {
             if (id == null)
@@ -260,7 +291,7 @@ namespace KotletkaShop.Controllers
             return View(discount);
         }
 
-        // POST: Discounts/Delete/5
+        // POST: Admin/Discounts/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

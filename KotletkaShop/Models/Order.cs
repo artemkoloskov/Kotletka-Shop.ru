@@ -9,6 +9,7 @@ namespace KotletkaShop.Models
 {
     public class Order
     {
+        // Модель EF
         public int OrderID { get; set; }
         public int CustomerID { get; set; }
         public DateTime DateCreated { get; set; }
@@ -30,6 +31,9 @@ namespace KotletkaShop.Models
         public ICollection<OrderProduct> OrderProducts { get; set; }
         public ICollection<OrderDiscount> OrderDiscounts { get; set; }
 
+        /// <summary>
+        /// Подсчитывает количество штук товаров в заказе
+        /// </summary>
         public int AmountOfProducts
         {
             get
@@ -45,6 +49,9 @@ namespace KotletkaShop.Models
             }
         }
 
+        /// <summary>
+        /// Сумма за заказ, без учета скидки и доставки
+        /// </summary>
         public double Cost
         {
             get
@@ -60,6 +67,9 @@ namespace KotletkaShop.Models
             }
         }
 
+        /// <summary>
+        /// Подсчитывает сумму скидки
+        /// </summary>
         public double DiscountAmount
         {
             get
@@ -143,8 +153,19 @@ namespace KotletkaShop.Models
             }
         }
 
+        /// <summary>
+        /// Подсчитывает полную стоимость за заказ, с учетом доставки и скидок
+        /// </summary>
         public double TotalCost => Cost + ShippingCost - DiscountAmount;
+
+        /// <summary>
+        /// Стоимость за зака с учетом скидки, без учета доставки
+        /// </summary>
         public double DiscountedCost => Cost - DiscountAmount;
+
+        /// <summary>
+        /// Сумма оплаченая клиентом за заказ
+        /// </summary>
         public double TotalPaid
         {
             get

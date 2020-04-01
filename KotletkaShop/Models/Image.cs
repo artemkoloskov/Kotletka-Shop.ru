@@ -1,8 +1,8 @@
-﻿using System;
-namespace KotletkaShop.Models
+﻿namespace KotletkaShop.Models
 {
     public class Image
     {
+        // модель EF
         public int ImageID { get; set; }
         public string Path { get; set; }
         public int Height { get; set; }

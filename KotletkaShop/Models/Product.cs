@@ -6,6 +6,7 @@ namespace KotletkaShop.Models
 {
     public class Product
     {
+        // Модель EF
         public int ProductID { get; set; }
         public string Handle { get; set; }
         public string Title { get; set; }
@@ -31,6 +32,7 @@ namespace KotletkaShop.Models
 
         [NotMapped]
         public List<Collection> Collections { get; set; } = new List<Collection>();
+
         public ProductImage DefaultProductImage
         {
             get

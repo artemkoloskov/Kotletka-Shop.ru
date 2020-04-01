@@ -5,6 +5,7 @@ using System.Linq;
 
 namespace KotletkaShop.Models
 {
+    // Типы скидки
     public enum DiscountTypes
     {
         Percentage = 1,
@@ -13,6 +14,8 @@ namespace KotletkaShop.Models
         BuyXGetY
     }
 
+    // К чему может быть применена скидка: Весь заказ, конкретные товары,
+    // конкретные коллекции
     public enum DiscountApplicableObjectTypes
     {
         EntireOrder = 1,
@@ -20,6 +23,8 @@ namespace KotletkaShop.Models
         SpecificCollections
     }
 
+    // Кто может воспользоваться скидкой: Все, конкретные клиенты, конкретные
+    // группы клиентов
     public enum DiscountEligibleObjectTypes
     {
         Everyone = 1,
@@ -27,6 +32,9 @@ namespace KotletkaShop.Models
         SpecificGroupsOfCustomers
     }
 
+    // Виды минимального уровня для активации скидки: Нет минимального значения,
+    // необходимо минимальная сумма заказа, необходимо минимальное количество
+    // товаров
     public enum DiscountMinimumRequirementTypes
     {
         None = 1,
@@ -36,6 +44,7 @@ namespace KotletkaShop.Models
 
     public class Discount
     {
+        // Моедль EF
         public int DiscountID { get; set; }
         public string Handle { get; set; }
         public DiscountTypes Type { get; set; }
@@ -60,6 +69,10 @@ namespace KotletkaShop.Models
         [NotMapped]
         public List<Customer> EligibleCustomers { get; set; }
 
+        /// <summary>
+        /// Вычленяет идентификаторы объектов, к которым применима скидка, из
+        /// строки
+        /// </summary>
         public List<int> ApplyableObjectsIDs
         {
             get
@@ -75,6 +88,10 @@ namespace KotletkaShop.Models
             }
         }
 
+        /// <summary>
+        /// Вычленяет идентификаторы объектов, которым доступна скидка, из
+        /// строки
+        /// </summary>
         public List<int> EligibleObjectsIDs
         {
             get
@@ -90,6 +107,11 @@ namespace KotletkaShop.Models
             }
         }
 
+        /// <summary>
+        /// Преобразует сумму скидки в проценты, в случае если тип скидки -
+        /// процентный
+        /// </summary>
+        /// <returns></returns>
         public double ScreenValue ()
         {
             if (Type == DiscountTypes.Percentage)
@@ -100,6 +122,10 @@ namespace KotletkaShop.Models
             return Value;
         }
 
+        /// <summary>
+        /// Выводит краткую информацию о скидке в читаемом виде
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             string text = Value + "";
@@ -169,6 +195,10 @@ namespace KotletkaShop.Models
             return text;
         }
 
+        /// <summary>
+        /// Переводит типы скидки в читаемую форму
+        /// </summary>
+        /// <returns></returns>
         public string TypeToString()
         {
             switch (Type)
@@ -188,6 +218,11 @@ namespace KotletkaShop.Models
             return "";
         }
 
+        /// <summary>
+        /// Переводит виды объектов к которым применима скидка в читаемую
+        /// форму
+        /// </summary>
+        /// <returns></returns>
         public string AppliesToToString()
         {
             switch (AppliesTo)
@@ -205,6 +240,11 @@ namespace KotletkaShop.Models
             return "";
         }
 
+        /// <summary>
+        /// Переводит виды минимального количества для активации скидки в
+        /// читаемую форму
+        /// </summary>
+        /// <returns></returns>
         public string MinimumRequirementToString()
         {
             switch (MinimumRequirement)
@@ -222,6 +262,10 @@ namespace KotletkaShop.Models
             return "";
         }
 
+        /// <summary>
+        /// Переводит виды объектов, которым доступна скидка, в читаемую форму
+        /// </summary>
+        /// <returns></returns>
         public string CustomerEligibilityToString()
         {
             switch (CustomerEligibility)
