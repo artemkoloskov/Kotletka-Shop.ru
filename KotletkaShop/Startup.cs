@@ -8,63 +8,81 @@ using KotletkaShop.Models;
 using Microsoft.EntityFrameworkCore;
 //using MySql.Data.EntityFrameworkCore.Extensions;
 using KotletkaShop.Data;
+using Microsoft.Extensions.Hosting;
 
 namespace KotletkaShop
 {
-    public class Startup
-    {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+	public class Startup
+	{
+		public Startup(IConfiguration configuration)
+		{
+			Configuration = configuration;
+		}
 
-        public IConfiguration Configuration { get; }
+		public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
+		// This method gets called by the runtime. Use this method to add services to the container.
+		public void ConfigureServices(IServiceCollection services)
+		{
+			services.Configure<CookiePolicyOptions>(options =>
+			{
+				// This lambda determines whether user consent for non-essential cookies is needed for a given request.
+				options.CheckConsentNeeded = context => true;
+				options.MinimumSameSitePolicy = SameSiteMode.None;
+			});
 
-            string connection = Configuration.GetConnectionString("DefaultConnection");
+			string connection = Configuration.GetConnectionString("DefaultConnection");
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+			services.AddRazorPages();
 
-            services.AddDbContext<StoreContext>(options => options.UseMySql(connection));
-        }
+			services.AddDbContext<StoreContext>(options => options.UseMySql(connection));
+		}
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
-        {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-                app.UseHsts();
-            }
+		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+		{
+			if (env.IsDevelopment())
+			{
+				app.UseDeveloperExceptionPage();
+			}
+			else
+			{
+				app.UseExceptionHandler("/Home/Error");
+				app.UseHsts();
+			}
 
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
-            app.UseCookiePolicy();
+			app.UseHttpsRedirection();
+			app.UseStaticFiles();
+			app.UseCookiePolicy();
 
-            app.UseMvc(routes =>
-            {
-                routes.MapAreaRoute(
-                    name: "MyAreaAdmin",
-                    areaName: "Admin",
-                    template: "Admin/{controller=Home}/{action=Index}/{id?}");
+			app.UseRouting();
 
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-            });
-        }
-    }
+			app.UseAuthentication();
+			app.UseAuthorization();
+
+			app.UseEndpoints(endpoints =>
+			{
+				endpoints.MapControllerRoute(
+					name: "default",
+					pattern: "{controller=Home}/{action=Index}/{id?}");
+
+				endpoints.MapAreaControllerRoute(
+					name: "areas",
+					areaName: "Admin",
+					pattern: "Admin/{controller=Home}/{action=Index}/{id?}");
+			});
+
+			/*app.UseMvc(routes =>
+			{
+				routes.MapAreaRoute(
+					name: "MyAreaAdmin",
+					areaName: "Admin",
+					template: "Admin/{controller=Home}/{action=Index}/{id?}");
+
+				routes.MapRoute(
+					name: "default",
+					template: "{controller=Home}/{action=Index}/{id?}");
+			});*/
+		}
+	}
 }
