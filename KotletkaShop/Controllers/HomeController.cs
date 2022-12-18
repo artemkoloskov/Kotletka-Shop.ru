@@ -1,39 +1,39 @@
-﻿using System.Diagnostics;
+﻿using KotletkaShop.Models;
 using Microsoft.AspNetCore.Mvc;
-using KotletkaShop.Models;
+using System.Diagnostics;
 
 namespace KotletkaShop.Controllers
 {
-	public class HomeController : Controller
-	{
-		public IActionResult Index()
-		{
-			return View();
-		}
+    public class HomeController : Controller
+    {
+        public IActionResult Index()
+        {
+            return View();
+        }
 
-		public IActionResult About()
-		{
-			ViewData["Message"] = "Your application description page.";
+        public IActionResult About()
+        {
+            ViewData["Message"] = "Your application description page.";
 
-			return View();
-		}
+            return View();
+        }
 
-		public IActionResult Contact()
-		{
-			ViewData["Message"] = "Your contact page.";
+        public IActionResult Contact()
+        {
+            ViewData["Message"] = "Your contact page.";
 
-			return View();
-		}
+            return View();
+        }
 
-		public IActionResult Privacy()
-		{
-			return View();
-		}
+        public IActionResult Privacy()
+        {
+            return View();
+        }
 
-		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-		public IActionResult Error()
-		{
-			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-		}
-	}
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+    }
 }
