@@ -29,11 +29,13 @@ namespace KotletkaShop
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            var connection = Configuration.GetConnectionString("DefaultConnection");
+            string connection = Configuration.GetConnectionString("DefaultConnection");
+
+            var version = ServerVersion.AutoDetect(connection);
 
             _ = services.AddRazorPages();
 
-            _ = services.AddDbContext<StoreContext>(options => options.UseMySql(connection));
+            _ = services.AddDbContext<StoreContext>(options => options.UseMySql(connection, version));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
