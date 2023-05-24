@@ -31,8 +31,8 @@ namespace KotletkaShop.Controllers
             ViewData["HandleSortParm"] = string.IsNullOrEmpty(sortOrder) ? "handle_desc" : "";
             ViewData["CurrentFilter"] = searchString;
 
-            var discounts = from s in _context.Discounts
-                            select s;
+            IQueryable<Discount> discounts = from s in _context.Discounts
+                                             select s;
 
             // Если строка поиска не пустая - пробуем считать из строки целое число
             // и выполняем поиск по нему, или, если число не удалось счтать,
@@ -42,7 +42,7 @@ namespace KotletkaShop.Controllers
             if (!string.IsNullOrEmpty(searchString))
             {
 
-                discounts = int.TryParse(searchString, out var searchNumber)
+                discounts = int.TryParse(searchString, out int searchNumber)
                     ? discounts.Where(d => d.Handle.Contains(searchString)
                                         || d.Value == searchNumber
                                         || d.DiscountID == searchNumber
@@ -73,7 +73,7 @@ namespace KotletkaShop.Controllers
             }
 
             // Загрузка скидки из БД по идентификатору
-            var discount = await _context.Discounts
+            Discount discount = await _context.Discounts
                 .AsNoTracking()
                 .SingleOrDefaultAsync(c => c.DiscountID == id);
 
@@ -110,7 +110,7 @@ namespace KotletkaShop.Controllers
         {
             var customers = new List<Customer>();
 
-            foreach (var id in ids)
+            foreach (int id in ids)
             {
                 customers.Add(await _context.Customers.Include(c => c.Image).Where(c => c.CustomerID == id).SingleOrDefaultAsync());
             }
@@ -127,7 +127,7 @@ namespace KotletkaShop.Controllers
         {
             var collections = new List<Collection>();
 
-            foreach (var id in ids)
+            foreach (int id in ids)
             {
                 collections.Add(await _context.Collections.Where(c => c.CollectionID == id).SingleOrDefaultAsync());
             }
@@ -144,7 +144,7 @@ namespace KotletkaShop.Controllers
         {
             var products = new List<Product>();
 
-            foreach (var id in ids)
+            foreach (int id in ids)
             {
                 products.Add(await _context.Products.Where(c => c.ProductID == id).SingleOrDefaultAsync());
             }
@@ -208,7 +208,7 @@ namespace KotletkaShop.Controllers
                 return NotFound();
             }
 
-            var discount = await _context.Discounts.FindAsync(id);
+            Discount discount = await _context.Discounts.FindAsync(id);
             return discount == null ? NotFound() : View(discount);
         }
 
@@ -227,7 +227,7 @@ namespace KotletkaShop.Controllers
                 return NotFound();
             }
 
-            var discountToUpdate = await _context.Discounts.FirstOrDefaultAsync(s => s.DiscountID == id);
+            Discount discountToUpdate = await _context.Discounts.FirstOrDefaultAsync(s => s.DiscountID == id);
 
             if (await TryUpdateModelAsync<Discount>(
                 discountToUpdate,
@@ -269,7 +269,7 @@ namespace KotletkaShop.Controllers
                 return NotFound();
             }
 
-            var discount = await _context.Discounts
+            Discount discount = await _context.Discounts
                 .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.DiscountID == id);
             if (discount == null)
@@ -292,7 +292,7 @@ namespace KotletkaShop.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var discount = await _context.Discounts.FindAsync(id);
+            Discount discount = await _context.Discounts.FindAsync(id);
             if (discount == null)
             {
                 return RedirectToAction(nameof(Index));

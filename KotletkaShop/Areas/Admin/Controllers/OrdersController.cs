@@ -33,8 +33,8 @@ namespace KotletkaShop.Controllers
             ViewData["FulfilledSortParm"] = sortOrder == "Fulfilled" ? "fulfilled_desc" : "Fulfilled";
             ViewData["CurrentFilter"] = searchString;
 
-            var orders = from s in _context.Orders
-                         select s;
+            IQueryable<Models.Order> orders = from s in _context.Orders
+                                              select s;
 
             // Если строка поиска не пустая - пробуем считать из строки целое число
             // и выполняем поиск по нему, или, если число не удалось счтать,
@@ -45,7 +45,7 @@ namespace KotletkaShop.Controllers
             if (!string.IsNullOrEmpty(searchString))
             {
 
-                orders = int.TryParse(searchString, out var searchNumber)
+                orders = int.TryParse(searchString, out int searchNumber)
                     ? orders.Where(o => o.CustomerID == searchNumber
                                     || o.OrderID == searchNumber
                                     || o.Customer.Apartment.Contains(searchString)
@@ -117,7 +117,7 @@ namespace KotletkaShop.Controllers
             }
 
             //  загрузка заказа из БД по идентификатору
-            var order = await _context.Orders
+            Models.Order order = await _context.Orders
                 .Include(o => o.Payments)
                 .Include(o => o.Customer)
                     .ThenInclude(c => c.Orders)

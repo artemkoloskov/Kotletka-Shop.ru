@@ -38,9 +38,9 @@ namespace KotletkaShop.Models
         {
             get
             {
-                var amount = 0;
+                int amount = 0;
 
-                foreach (var p in OrderProducts)
+                foreach (OrderProduct p in OrderProducts)
                 {
                     amount += p.Quantity;
                 }
@@ -58,7 +58,7 @@ namespace KotletkaShop.Models
             {
                 double cost = 0;
 
-                foreach (var p in OrderProducts)
+                foreach (OrderProduct p in OrderProducts)
                 {
                     cost += p.Quantity * p.Product.Price;
                 }
@@ -75,17 +75,17 @@ namespace KotletkaShop.Models
             get
             {
                 double discountAmount = 0;
-                var shippingIsAlreadyFree = false;
+                bool shippingIsAlreadyFree = false;
 
-                foreach (var d in OrderDiscounts)
+                foreach (OrderDiscount d in OrderDiscounts)
                 {
                     if (d.Discount.IsActive)
                     {
                         if (d.Discount.CustomerEligibility == Everyone ||
-                            d.Discount.CustomerEligibility == SpecificCustomers && d.Discount.EligibleObjectsIDs.Contains(CustomerID)) // TODO добавить проверку на группы и сами группы покупателей
+                            (d.Discount.CustomerEligibility == SpecificCustomers && d.Discount.EligibleObjectsIDs.Contains(CustomerID))) // TODO добавить проверку на группы и сами группы покупателей
                         {
-                            if (d.Discount.MinimumRequirement == MinimumAmount && Cost >= d.Discount.MinimumRequirementValue ||
-                                d.Discount.MinimumRequirement == MinimumQuantity && AmountOfProducts >= d.Discount.MinimumRequirementValue ||
+                            if ((d.Discount.MinimumRequirement == MinimumAmount && Cost >= d.Discount.MinimumRequirementValue) ||
+                                (d.Discount.MinimumRequirement == MinimumQuantity && AmountOfProducts >= d.Discount.MinimumRequirementValue) ||
                                 d.Discount.MinimumRequirement == None)
                             {
                                 if (d.Discount.AppliesTo == EntireOrder)
@@ -114,7 +114,7 @@ namespace KotletkaShop.Models
                                 }
                                 else if (d.Discount.AppliesTo == SpecificProducts)
                                 {
-                                    foreach (var p in OrderProducts)
+                                    foreach (OrderProduct p in OrderProducts)
                                     {
                                         if (d.Discount.ApplyableObjectsIDs.Contains(p.ProductID))
                                         {
@@ -174,7 +174,7 @@ namespace KotletkaShop.Models
             {
                 double totalPaid = 0;
 
-                foreach (var p in Payments)
+                foreach (Payment p in Payments)
                 {
                     totalPaid += p.Amount;
                 }

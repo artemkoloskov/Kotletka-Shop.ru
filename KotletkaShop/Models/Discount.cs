@@ -123,7 +123,7 @@ namespace KotletkaShop.Models
         /// <returns></returns>
         public override string ToString()
         {
-            var text = Value + "";
+            string text = Value + "";
 
             switch (Type)
             {
@@ -149,10 +149,10 @@ namespace KotletkaShop.Models
                     text += "на весь заказ. "; //Localize
                     break;
                 case DiscountApplicableObjectTypes.SpecificProducts:
-                    text += "на " + ApplyableObjectsIDs.Count() + " товаров. "; //Localize
+                    text += "на " + ApplyableObjectsIDs.Count + " товаров. "; //Localize
                     break;
                 case DiscountApplicableObjectTypes.SpecificCollections:
-                    text += "на " + ApplyableObjectsIDs.Count() + " коллекций. "; //Localize
+                    text += "на " + ApplyableObjectsIDs.Count + " коллекций. "; //Localize
                     break;
                 default:
                     break;

@@ -30,8 +30,8 @@ namespace KotletkaShop.Controllers
             ViewData["NameSortParm"] = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["CurrentFilter"] = searchString;
 
-            var customers = from s in _context.Customers
-                            select s;
+            IQueryable<Customer> customers = from s in _context.Customers
+                                             select s;
 
             // Если строка поиска не пустая - пробуем считать из строки целое число
             // и выполняем поиск по нему, или, если число не удалось счтать,
@@ -41,7 +41,7 @@ namespace KotletkaShop.Controllers
             if (!string.IsNullOrEmpty(searchString))
             {
 
-                customers = int.TryParse(searchString, out var searchNumber)
+                customers = int.TryParse(searchString, out int searchNumber)
                     ? customers.Where(c => c.FirstName.Contains(searchString)
                                                    || c.LastName.Contains(searchString)
                                                    || c.MiddleName.Contains(searchString)
@@ -100,7 +100,7 @@ namespace KotletkaShop.Controllers
 
             // Загрузка из БД сущности клиента, вместе с его заказами, платежами
             // и фото профиля
-            var customer = await _context.Customers
+            Customer customer = await _context.Customers
                 .Include(c => c.Orders)
                 .Include(c => c.Payments)
                 .Include(c => c.Image)
@@ -165,7 +165,7 @@ namespace KotletkaShop.Controllers
                 return NotFound();
             }
 
-            var customer = await _context.Customers.FindAsync(id);
+            Customer customer = await _context.Customers.FindAsync(id);
             return customer == null ? NotFound() : View(customer);
         }
 
@@ -184,7 +184,7 @@ namespace KotletkaShop.Controllers
                 return NotFound();
             }
 
-            var customerToUpdate = await _context.Customers.FirstOrDefaultAsync(s => s.CustomerID == id);
+            Customer customerToUpdate = await _context.Customers.FirstOrDefaultAsync(s => s.CustomerID == id);
 
             if (await TryUpdateModelAsync<Customer>(
                 customerToUpdate,
@@ -225,7 +225,7 @@ namespace KotletkaShop.Controllers
                 return NotFound();
             }
 
-            var customer = await _context.Customers
+            Customer customer = await _context.Customers
                 .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.CustomerID == id);
             if (customer == null)
@@ -248,7 +248,7 @@ namespace KotletkaShop.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var customer = await _context.Customers.FindAsync(id);
+            Customer customer = await _context.Customers.FindAsync(id);
             if (customer == null)
             {
                 return RedirectToAction(nameof(Index));

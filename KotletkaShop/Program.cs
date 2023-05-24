@@ -12,20 +12,20 @@ namespace KotletkaShop
     {
         public static void Main(string[] args)
         {
-            var host = CreateWebHostBuilder(args).Build();
+            IWebHost host = CreateWebHostBuilder(args).Build();
 
             // Инициализация БД
-            using (var scope = host.Services.CreateScope())
+            using (IServiceScope scope = host.Services.CreateScope())
             {
-                var services = scope.ServiceProvider;
+                IServiceProvider services = scope.ServiceProvider;
                 try
                 {
-                    var context = services.GetRequiredService<StoreContext>();
+                    StoreContext context = services.GetRequiredService<StoreContext>();
                     DbInitializer.Initialize(context);
                 }
                 catch (Exception ex)
                 {
-                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    ILogger<Program> logger = services.GetRequiredService<ILogger<Program>>();
                     logger.LogError(ex, "An error occurred while seeding the database.");
                 }
             }

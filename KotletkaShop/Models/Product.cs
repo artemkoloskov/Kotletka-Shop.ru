@@ -42,7 +42,7 @@ namespace KotletkaShop.Models
                     return null;
                 }
 
-                foreach (var p in ProductImages)
+                foreach (ProductImage p in ProductImages)
                 {
                     if (p.IsDefaultImage)
                     {

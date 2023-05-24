@@ -49,8 +49,8 @@ namespace KotletkaShop.Controllers
 
             ViewData["CurrentFilter"] = searchString;
 
-            var collections = from s in _context.Collections
-                              select s;
+            IQueryable<Collection> collections = from s in _context.Collections
+                                                 select s;
             // Если строка поиска не пустая - пробуем считать из строки целое число
             // и выполняем поиск по нему, или, если число не удалось счтать,
             // ищем по самой строке
@@ -58,7 +58,7 @@ namespace KotletkaShop.Controllers
             // коллекции
             if (!string.IsNullOrEmpty(searchString))
             {
-                collections = int.TryParse(searchString, out var searchNumber)
+                collections = int.TryParse(searchString, out int searchNumber)
                     ? collections.Where(c => c.Title.Contains(searchString)
                                        || c.Handle.Contains(searchString)
                                        || c.CollectionID == searchNumber
@@ -91,7 +91,7 @@ namespace KotletkaShop.Controllers
             }
 
             // загрузка коллекции из БД по идентификтору
-            var collection = await _context.Collections
+            Collection collection = await _context.Collections
                 .Include(c => c.Image)
                 .SingleOrDefaultAsync(m => m.CollectionID == id);
 
@@ -160,13 +160,8 @@ namespace KotletkaShop.Controllers
                 return NotFound();
             }
 
-            var collection = await _context.Collections.FindAsync(id);
-            if (collection == null)
-            {
-                return NotFound();
-            }
-
-            return View(collection);
+            Collection collection = await _context.Collections.FindAsync(id);
+            return collection == null ? NotFound() : View(collection);
         }
 
         // POST: Admin/Collections/Edit/5
@@ -179,7 +174,7 @@ namespace KotletkaShop.Controllers
                 return NotFound();
             }
 
-            var collectionToUpdate = await _context.Collections.FirstOrDefaultAsync(s => s.CollectionID == id);
+            Collection collectionToUpdate = await _context.Collections.FirstOrDefaultAsync(s => s.CollectionID == id);
 
             if (await TryUpdateModelAsync<Collection>(
                 collectionToUpdate,
@@ -218,7 +213,7 @@ namespace KotletkaShop.Controllers
                 return NotFound();
             }
 
-            var collection = await _context.Collections
+            Collection collection = await _context.Collections
                 .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.CollectionID == id);
             if (collection == null)
@@ -241,7 +236,7 @@ namespace KotletkaShop.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var collection = await _context.Collections.FindAsync(id);
+            Collection collection = await _context.Collections.FindAsync(id);
             if (collection == null)
             {
                 return RedirectToAction(nameof(Index));

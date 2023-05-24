@@ -29,7 +29,7 @@ namespace KotletkaShop.Data
                 new Image{Path="/Content/Images/placeholder.jpg",AltText="Заглушка зеленая"},
                 new Image{Path="/Content/Images/placeholder-red.jpg",AltText="Заглушка красная"},
             };
-            foreach (var i in images)
+            foreach (Image i in images)
             {
                 _ = context.Images.Add(i);
             }
@@ -41,7 +41,7 @@ namespace KotletkaShop.Data
                 new Collection{Handle="Stickers_Collection",Title="Стикеры, наклейки, декали",Body="<p>Здесь все наклейки</p>",Published=true,CompareSubject1=ProductTag,Condition1=IsEqualTo,CompareTo1="sticker",ImageID=1,SortBy=A_Z},
                 new Collection{Handle="CarParts_Collection",Title="Автозапчасти",Body="<p>Здесь все автозапчасти</p>",Published=false,CompareSubject1=ProductPrice,Condition1=IsLessThen,CompareTo1="260",ImageID=2,SortBy=Z_A}
             };
-            foreach (var c in collections)
+            foreach (Collection c in collections)
             {
                 _ = context.Collections.Add(c);
             }
@@ -53,7 +53,7 @@ namespace KotletkaShop.Data
                 new Customer{FirstName="Иван",MiddleName="Иванович",LastName="Иванов",Country="Россия",City="Иваново",Province="Ивановская область",District="Ивановский район",Building="1и",ZipCode=111000,PhoneNumber="+79990001122",Email="ivanov@mail.ru",Note="Первый клиент, юху!",AcceptsMarketing=false,RegisterDate=DateTime.Parse("2013-02-13"),ImageID=1,Tags="first, best"},
                 new Customer{FirstName="Петр",MiddleName="Петрович",LastName="Петров",Country="Украина",City="Петрово",Province="Петровская область",District="Петровский район",Building="2п",ZipCode=222000,PhoneNumber="+79990002233",Email="petrov@mail.ru",Note="Второй клиент, meh",AcceptsMarketing=false,RegisterDate=DateTime.Parse("2013-02-14"),ImageID=2,Tags="second, meh"}
             };
-            foreach (var c in customers)
+            foreach (Customer c in customers)
             {
                 _ = context.Customers.Add(c);
             }
@@ -65,7 +65,7 @@ namespace KotletkaShop.Data
                 new ProductType{Handle="Стикеры"},
                 new ProductType{Handle="Запчасти"}
             };
-            foreach (var p in productTypes)
+            foreach (ProductType p in productTypes)
             {
                 _ = context.ProductTypes.Add(p);
             }
@@ -78,7 +78,7 @@ namespace KotletkaShop.Data
                 new Product{Handle="bumper_carPart",Title="Запчасть \"Бампер\"",Body="<p>Лучшая Бампер в мире? Конечно! все любят звездбамперыочки!</p>",Vendor="Carpart-Shop",ProductTypeID=2,Tags="auto, engine, decal",Published=true,Option1Name="Цвета",Option1Value="Красный, Синий",Option2Name="Размеры",Option2Value="2см, 3см, 4см",Weight=15000,Quantity=18,Price=250.0},
                 new Product{Handle="colenval",Title="Запчасть \"коленвал\"",Body="<p>Просто коленвал</p>",Vendor="Carpart-Shop",ProductTypeID=2,Tags="auto, bamper",Published=true,Weight=1,Quantity=-1,Price=250.0}
             };
-            foreach (var p in products)
+            foreach (Product p in products)
             {
                 _ = context.Products.Add(p);
             }
@@ -93,7 +93,7 @@ namespace KotletkaShop.Data
                 new ProductImage {ProductID=3,ImageID=1},
                 new ProductImage {ProductID=3,ImageID=2,IsDefaultImage=true},
             };
-            foreach (var p in productImages)
+            foreach (ProductImage p in productImages)
             {
                 _ = context.ProductImages.Add(p);
             }
@@ -106,7 +106,7 @@ namespace KotletkaShop.Data
                 new Discount{Handle="50_RUBLE_1-3PRODS_2",Type=FixedAmount,Value=50,AppliesTo=SpecificProducts,ApplicableObjects="1, 3",MinimumRequirement=MinimumQuantity,MinimumRequirementValue=3,CustomerEligibility=SpecificCustomers,EligibleObjects="2",IsActive=true,TimesUsed=0,StartDate=DateTime.ParseExact("2019-04-01 00:00:00", "yyyy-MM-dd HH:mm:ss",System.Globalization.CultureInfo.InvariantCulture),EndDate=DateTime.ParseExact("2100-01-01 00:00:00", "yyyy-MM-dd HH:mm:ss",System.Globalization.CultureInfo.InvariantCulture)},
                 new Discount{Handle="FREESHIPPING__ALLPRODS_EVERYONE",Type=FreeShiping,AppliesTo=EntireOrder,MinimumRequirement=None,CustomerEligibility=Everyone,IsActive=true,TimesUsed=3,StartDate=DateTime.ParseExact("2019-02-01 00:00:00", "yyyy-MM-dd HH:mm:ss",System.Globalization.CultureInfo.InvariantCulture),EndDate=DateTime.ParseExact("2019-05-01 00:00:00", "yyyy-MM-dd HH:mm:ss",System.Globalization.CultureInfo.InvariantCulture)}
             };
-            foreach (var d in discounts)
+            foreach (Discount d in discounts)
             {
                 _ = context.Discounts.Add(d);
             }
@@ -119,7 +119,7 @@ namespace KotletkaShop.Data
                 new Order{CustomerID=2,DateCreated=DateTime.Parse("2019-02-02 00:02:02"),Paid=true,DatePaid=DateTime.Parse("2019-01-02 00:02:12"),Fulfilled=true,DateFulfilled=DateTime.Parse("2019-01-03"),Shipped=false,Canceled=true,DateCanceled=DateTime.Parse("2019-02-03"),ShippingCost=220,Note="Второй тестовый заказ, отменен",Draft=false},
                 new Order{CustomerID=1,DateCreated=DateTime.Parse("2019-03-03 00:03:03"),Paid=false,Fulfilled=false,Shipped=false,Canceled=false,ShippingCost=330,Note="Третий тестовый заказ, драфт",Draft=true}
             };
-            foreach (var o in orders)
+            foreach (Order o in orders)
             {
                 _ = context.Orders.Add(o);
             }
@@ -133,7 +133,7 @@ namespace KotletkaShop.Data
                 new OrderProduct{OrderID=2,ProductID=1,Quantity=8},
                 new OrderProduct{OrderID=3,ProductID=2,Quantity=12}
             };
-            foreach (var p in orderProducts)
+            foreach (OrderProduct p in orderProducts)
             {
                 _ = context.OrderProducts.Add(p);
             }
@@ -147,7 +147,7 @@ namespace KotletkaShop.Data
                 new OrderDiscount{OrderID=2,DiscountID=3},
                 new OrderDiscount{OrderID=3,DiscountID=1}
             };
-            foreach (var d in orderDiscounts)
+            foreach (OrderDiscount d in orderDiscounts)
             {
                 _ = context.OrderDiscounts.Add(d);
             }
@@ -160,7 +160,7 @@ namespace KotletkaShop.Data
                 new Payment{CustomerID=1,OrderID=1,DatePaid=DateTime.Parse("2019-01-01 00:01:01"),Amount=500,Note="Платеж за первый заказ, второй платеж из 2"},
                 new Payment{CustomerID=2,OrderID=3,DatePaid=DateTime.Parse("2019-01-02 00:02:02"),Amount=2000,Note="Платеж за второй заказ"}
             };
-            foreach (var p in payments)
+            foreach (Payment p in payments)
             {
                 _ = context.Payments.Add(p);
             }

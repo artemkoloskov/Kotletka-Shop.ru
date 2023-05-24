@@ -27,12 +27,12 @@ namespace KotletkaShop.Controllers
             ViewData["VendorSortParm"] = sortOrder == "Vendor" ? "vendor_desc" : "Vendor";
             ViewData["CurrentFilter"] = searchString;
 
-            var products = from s in _context.Products
-                           select s;
+            IQueryable<Models.Product> products = from s in _context.Products
+                                                  select s;
 
             if (!string.IsNullOrEmpty(searchString))
             {
-                products = int.TryParse(searchString, out var searchNumber)
+                products = int.TryParse(searchString, out int searchNumber)
                     ? products.Where(p => p.Title.Contains(searchString)
                                        || p.Body.Contains(searchString)
                                        || p.Option1Name.Contains(searchString)
@@ -88,7 +88,7 @@ namespace KotletkaShop.Controllers
             }
 
             // загрузка коллекции из БД по идентификтору
-            var product = await _context.Products
+            Models.Product product = await _context.Products
                 .Include(p => p.ProductType)
                 .Include(p => p.ProductImages)
                     .ThenInclude(pi => pi.Image)

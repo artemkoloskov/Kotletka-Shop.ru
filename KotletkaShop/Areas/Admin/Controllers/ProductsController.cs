@@ -33,12 +33,12 @@ namespace KotletkaShop.Controllers
             ViewData["VendorSortParm"] = sortOrder == "Vendor" ? "vendor_desc" : "Vendor";
             ViewData["CurrentFilter"] = searchString;
 
-            var products = from s in _context.Products
-                           select s;
+            IQueryable<Product> products = from s in _context.Products
+                                           select s;
 
             if (!string.IsNullOrEmpty(searchString))
             {
-                products = int.TryParse(searchString, out var searchNumber)
+                products = int.TryParse(searchString, out int searchNumber)
                     ? products.Where(p => p.Title.Contains(searchString)
                                        || p.Handle.Contains(searchString)
                                        || p.Body.Contains(searchString)
@@ -96,7 +96,7 @@ namespace KotletkaShop.Controllers
             }
 
             // Загрузка товара из БД по идентификатору
-            var product = await _context.Products
+            Product product = await _context.Products
                 .Include(p => p.ProductType)
                 .Include(p => p.ProductImages)
                     .ThenInclude(pi => pi.Image)
@@ -109,13 +109,13 @@ namespace KotletkaShop.Controllers
             }
 
             // Загрузка коллекций из БД
-            var collections = await _context.Collections
+            System.Collections.Generic.List<Collection> collections = await _context.Collections
                 .Include(c => c.Image)
                 .AsNoTracking()
                 .ToListAsync();
 
             // проверка коллеций на факт содержания текущего товара
-            foreach (var c in collections)
+            foreach (Collection c in collections)
             {
                 c.Products = await c.GetCollectionProducts(_context);
 
@@ -187,7 +187,7 @@ namespace KotletkaShop.Controllers
                 return NotFound();
             }
 
-            var product = await _context.Products.FindAsync(id);
+            Product product = await _context.Products.FindAsync(id);
 
             return product == null ? NotFound() : View(product);
         }
@@ -207,7 +207,7 @@ namespace KotletkaShop.Controllers
                 return NotFound();
             }
 
-            var productToUpdate = await _context.Products.FirstOrDefaultAsync(s => s.ProductID == id);
+            Product productToUpdate = await _context.Products.FirstOrDefaultAsync(s => s.ProductID == id);
 
             if (await TryUpdateModelAsync<Product>(
                 productToUpdate,
@@ -250,7 +250,7 @@ namespace KotletkaShop.Controllers
                 return NotFound();
             }
 
-            var product = await _context.Products
+            Product product = await _context.Products
                 .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.ProductID == id);
             if (product == null)
@@ -279,7 +279,7 @@ namespace KotletkaShop.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var product = await _context.Products.FindAsync(id);
+            Product product = await _context.Products.FindAsync(id);
 
             if (product == null)
             {

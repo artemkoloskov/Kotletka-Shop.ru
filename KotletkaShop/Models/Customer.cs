@@ -52,7 +52,7 @@ namespace KotletkaShop.Models
 
                 if (Payments != null)
                 {
-                    foreach (var p in Payments)
+                    foreach (Payment p in Payments)
                     {
                         totalSpent += p.Amount;
                     }
