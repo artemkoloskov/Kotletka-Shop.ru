@@ -33,7 +33,7 @@
         {
             <a class="row" asp-action="Details" asp-route-id="@product.ProductID">
                 <div class="cell">
-                    <img src="@product.DefaultProductImage.Image.Path" alt="@product.DefaultProductImage.Image.AltText" class="admin-thumbnail" />
+                    <img src="@product.DefaultProductImage?.Image?.Path" alt="@product.DefaultProductImage?.Image?.AltText" class="admin-thumbnail" />
 
                 </div>
                 <div class="cell">
