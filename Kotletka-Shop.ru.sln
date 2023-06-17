@@ -10,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KotletkaShop.Tests", "KotletkaShop.Tests\KotletkaShop.Tests.csproj", "{0361801B-CE2B-45A8-8F00-261580A039A5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,8 +22,15 @@ Global
 		{C61604E6-AA97-4D6D-B2E9-0E5B6D8A91D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C61604E6-AA97-4D6D-B2E9-0E5B6D8A91D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C61604E6-AA97-4D6D-B2E9-0E5B6D8A91D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0361801B-CE2B-45A8-8F00-261580A039A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0361801B-CE2B-45A8-8F00-261580A039A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0361801B-CE2B-45A8-8F00-261580A039A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0361801B-CE2B-45A8-8F00-261580A039A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {063A1B24-DF22-4190-8A5A-CB800D92775D}
 	EndGlobalSection
 EndGlobal
